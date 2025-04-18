@@ -1,36 +1,63 @@
 
+/* COLOR-Pallet
+button color=#AF6541 
+side-bar=#F6F4F2
+box-shadow=#0C7060
+header-background=linear-gradient(to left,#0C7060,#427618);
+*/
+
 body {
     padding: 0;
     margin: 0;
     display: flex; /* Use flexbox for layout */
     flex-direction: column; /* Stack header and main section */
     height: 100vh; /* Full viewport height */
+    /* overflow-y: hidden; */
 }
 
 header {
     min-width: 100%;
     height: 60px;
     background-color: #0C7060;
+    background: linear-gradient(to left,#0C7060,#427618);
     position: FIXED;
     top: 0;
     z-index: 10; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}
+#side-bar-togle{
+    display:none;
+    background-color: transparent;
+    color:#eee;
+    outline: none;
+    border: none;
+    font-size: 20pt;
+    cursor: pointer;
 }
 
 aside {
-    min-height: calc(100vh - 60px);
+    max-height: calc(90vh - 60px);
     background-color: #F6F4F2;
     position: sticky;
-    top: 60px; /* Matches the height of the header */
-    z-index: 5; /* Lower than the header */
+    top: 90px; 
+    left:10px;
+    z-index: 5; 
+    box-shadow: 0px 0px 1px #0C7060;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 main {
-    background-color: black;
     padding: 20px;
-    color: white;
-    overflow-y: auto; /* Enable vertical scrolling */
-    flex-grow: 1; /* Allow main to take the remaining space */
+    overflow-y: auto; 
+    flex-grow: 1; 
     font-size: 1.5em;
+    max-height: calc(100vh - 100px);
     /* #AF6541 */
 }
 
@@ -38,12 +65,67 @@ main {
     display: grid;
     grid-template-columns: 2fr 7fr;
     height: 100%; /* Ensure grid fills the main section */
-    margin-top:60PX
+    margin-top:60px;
+    position:relative;
+    top:0;
 }
 .side-bar-card{
     width:90%;
-    border:solid 1px black;
-    height: 20px;
+    border:none;
+    border-bottom:solid 1px #0C7060;
+    height: 40px;
     margin: 5px auto;
     top:1px;
+    transition: 0.3s;
+    font-size: 18pt;
+    text-align: center;
+    padding:5px 15px;
+    font-family: "Poppins",serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor:pointer;
+    outline: none;
+    background-color: #eee;
+}
+.side-bar-card:hover{
+    background: linear-gradient(to left,#0C7060,#427618);;
+    color:#F6F4F2;
+    border-radius:6px; 
+    
+}
+
+@media (max-width:450px){
+    aside{
+        position: fixed;
+        width:60%;
+        height: 100vh;
+        left: -60%; 
+        display:none;
+        transition: left 0.5s ease; 
+    }
+    #content-section{
+        grid-template-columns: 1fr;
+    }
+    #side-bar-togle{
+        display: block;
+    }
+    #hidder{
+     width:100vw;
+     height: 100vh;
+     z-index:1;
+     background-color: rgba(0, 0, 0, 80%);
+     position: fixed;
+     display: none;
+     transition: opacity 0.5s ease;
+    }
+    aside.show{
+        display:block;
+        left:0;
+    }
+    #hidder.show {
+        display: block;
+        opacity: 1;
+    }
+ 
 }
