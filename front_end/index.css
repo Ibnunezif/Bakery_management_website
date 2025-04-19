@@ -5,6 +5,9 @@ side-bar=#F6F4F2
 box-shadow=#0C7060
 header-background=linear-gradient(to left,#0C7060,#427618);
 */
+*{
+    font-family:"Poppins", sans-serif;
+}
 ::-webkit-scrollbar{
     width:0
 }
@@ -14,7 +17,6 @@ body {
     display: flex; 
     flex-direction: column; 
     height: 100vh;
-    font-family: poppins, sans-serif;
 }
 
 header {
@@ -115,12 +117,16 @@ main {
     'opsz' 100;
     padding: 0 10px;
   }
-
+.active-effect{
+    background: linear-gradient(to left,#0C7060,#427618);;
+    color:#F6F4F2;
+    border-radius: 6px;
+}
 
 @media (max-width:450px){
     aside{
         position: fixed;
-        width:60%;
+        min-width:60%;
         height: 100vh;
         left: -60%; 
         display:none;

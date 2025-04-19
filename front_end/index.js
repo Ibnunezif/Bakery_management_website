@@ -19,6 +19,11 @@ function showMain(id){
         element.classList.remove("show");
     });
     mainObjects[id].classList.add("show");
+    sideBarCard=document.getElementsByClassName("side-bar-card");
+    Array.from(sideBarCard).forEach(element => {
+        element.classList.remove("active-effect");
+    })
+    document.querySelector(`#${id}-button`).classList.add("active-effect");
     sideBarToggle();
 }
 
