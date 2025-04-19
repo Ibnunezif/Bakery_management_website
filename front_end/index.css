@@ -5,14 +5,16 @@ side-bar=#F6F4F2
 box-shadow=#0C7060
 header-background=linear-gradient(to left,#0C7060,#427618);
 */
-
+::-webkit-scrollbar{
+    width:0
+}
 body {
     padding: 0;
     margin: 0;
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column; /* Stack header and main section */
-    height: 100vh; /* Full viewport height */
-    /* overflow-y: hidden; */
+    display: flex; 
+    flex-direction: column; 
+    height: 100vh;
+    font-family: poppins, sans-serif;
 }
 
 header {
@@ -78,7 +80,7 @@ main {
     margin: 5px auto;
     top:1px;
     transition: 0.3s;
-    font-size: 18pt;
+    font-size: 1.5em;
     text-align: center;
     padding:5px 15px;
     font-family: "Poppins",serif;
@@ -106,7 +108,14 @@ main {
     box-shadow: 0px 0px 1px #0C7060;
     padding: 10px;
 }
-
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 500,
+    'GRAD' 1,
+    'opsz' 100;
+    padding: 0 10px;
+  }
 
 
 @media (max-width:450px){
