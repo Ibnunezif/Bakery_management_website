@@ -9,3 +9,12 @@ function sideBarToggle() {
     }
 }
 
+function showMain(id){
+    mainObjects=document.getElementsByClassName("main-card");
+    Array.from(mainObjects).forEach(element => {
+        element.classList.remove("show");
+    });
+    mainObjects[id].classList.add("show");
+    sideBarToggle();
+}
+

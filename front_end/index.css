@@ -50,10 +50,11 @@ aside {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-right: 10px;
 }
 
 main {
-    padding: 20px;
+    padding: 20px 10px;
     overflow-y: auto; 
     flex-grow: 1; 
     font-size: 1.5em;
@@ -94,6 +95,19 @@ main {
     border-radius:6px; 
     
 }
+.main-card{
+    display: none;
+}
+.main-card.show{
+    display: block;
+    min-height: 100vh;
+    background-color: #F6F4F2;
+    border-radius: 10px;
+    box-shadow: 0px 0px 1px #0C7060;
+    padding: 10px;
+}
+
+
 
 @media (max-width:450px){
     aside{
