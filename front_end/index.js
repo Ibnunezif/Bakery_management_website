@@ -1,3 +1,5 @@
+//To show and hide the side bar when the screen is small
+//for home page
 function sideBarToggle() {
     const hidder = document.getElementById("hidder");
     const asideElements = document.getElementsByTagName("aside");
@@ -9,6 +11,8 @@ function sideBarToggle() {
     }
 }
 
+// to show the main contents when clicked on the cards on the side bar
+//for home page
 function showMain(id){
     mainObjects=document.getElementsByClassName("main-card");
     Array.from(mainObjects).forEach(element => {
@@ -16,5 +20,13 @@ function showMain(id){
     });
     mainObjects[id].classList.add("show");
     sideBarToggle();
+}
+
+
+//To switch between the login and registration form 
+//for login and registration page
+function showForm(formId){
+document.querySelectorAll(".form-box").forEach(form=>form.classList.remove("active"));
+document.getElementById(formId).classList.add("active");
 }
 

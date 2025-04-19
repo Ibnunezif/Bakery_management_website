@@ -1,0 +1,78 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins", sans-serif;
+}
+body{
+    
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background:linear-gradient(to right, #00c6ff, #0072ff);
+    color:#333}
+
+#container{
+   margin:0,15px;
+}
+.form-box{
+  width:100%;
+  max-width:450px;
+  padding:30px;
+  background:#fff;
+  border-radius:10px;
+  box-shadow:0 0 10px rgba (0,0,0,0.1); 
+  margin: 20px 0;
+  display: none;
+}
+h2{
+    font-size:34px;
+    text-align: center;
+    margin-bottom: 20px;
+    color:#0C7060;
+}
+input{
+    width:100%;
+    max-width:450px;
+    padding:12px;
+    background:#eee;
+    margin-bottom:20px;
+    border:1px solid #ccc;
+    outline:none;
+    border-radius:6px;
+    font-size:16px;
+    color:#333;
+}
+button{
+    width:100%;
+    padding:12px;
+    background: linear-gradient(to left,#0C7060,#427618);
+    border:none;
+    border-radius:6px;
+    font-size:18px;
+    font-weight: 500;
+    color:#fff;
+    cursor:pointer;
+    margin-bottom: 20px;;
+    transition:0.5s;
+}
+button:hover{
+    background: linear-gradient(to left,#233f0c,#074137);
+}
+p{
+    text-align: center;
+    font-size: 14.5px;
+    margin-bottom: 10px;
+}
+p a{
+    text-decoration: none;
+    color:#0C7060;
+    font-weight: 500;
+}
+p a:hover{
+    text-decoration: underline;
+}
+.active{
+    display: block;
+}

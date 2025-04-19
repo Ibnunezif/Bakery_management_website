@@ -20,7 +20,6 @@ body {
 header {
     min-width: 100%;
     height: 60px;
-    background-color: #0C7060;
     background: linear-gradient(to left,#0C7060,#427618);
     position: FIXED;
     top: 0;
