@@ -36,7 +36,7 @@ if (!isset($_SESSION['email'])) {
         <aside class="">
             <button class="side-bar-card active-effect" id="dashboard-button" onclick="showMain('dashboard')" draggable="true"><span class="material-symbols-outlined">dashboard</span>Dashboard</button>
             <button class="side-bar-card" id="product-button" onclick="showMain('product')" draggable="true"></span>Product</button>
-            <button class="side-bar-card" id="solled-button" onclick="showMain('solled')" draggable="true">Solled</button>
+            <button class="side-bar-card" id="solled-button" onclick="showMain('solled')" draggable="true">Sold</button>
             <button class="side-bar-card" id="delivered-button" onclick="showMain('delivered')" draggable="true">Delivered</button>
             <button class="side-bar-card" id="report-button" onclick="showMain('report')" draggable="true">Report</button>
         </aside>
