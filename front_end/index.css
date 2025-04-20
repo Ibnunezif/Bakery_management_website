@@ -118,12 +118,47 @@ main {
     padding: 0 10px;
   }
 .active-effect{
-    background: linear-gradient(to left,#0C7060,#427618);;
+    background: linear-gradient(to left,#0C7060,#427618);
     color:#F6F4F2;
     border-radius: 6px;
 }
+#bakery-name{
+    font-size: 2em;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 auto;
+    padding: 10px 10px;
+    background: transparent;
+    border-radius: 10px;
+}
+button#logout{
+    background: linear-gradient(to left,#0C7060,#427618);
+    color:#F6F4F2;
+    padding: 12px;
+    border-radius: 6px;
+    height:40px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor:pointer;
+    outline: none;
+    border: none;
+    margin:10px;
+    transition:0.5s;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0px 0px 1px #F6F4F2;
+    align-items: center;
+}
+button#logout:hover{
+    background: linear-gradient(to left,#233f0c,#074137);
+    color:#eee;
+}
 
 @media (max-width:450px){
+    #bakery-name{
+        font-size: 1em;
+    }
     aside{
         position: fixed;
         min-width:60%;

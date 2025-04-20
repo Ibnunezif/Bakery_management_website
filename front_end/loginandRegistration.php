@@ -1,39 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login and Regigistration</title>
-    <link href="loginandRegistration.css" rel="stylesheet"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-</head>
-<body>
+<?php
+include("header.html");
+session_start();
+
+$errors=[
+    'login'=>$_SESSION['login_error']??'',
+    'register'=>$_SESSION['register_error']??''
+];
+
+$activeForm=$_SESSION['active_form']??'login';
+session_unset();
+
+function showError($error){
+    return !empty($error)?"<p class='error-message'>$error</p>":"";
+}
+
+function isActiveForm ($formName,$activeForm){
+    return $formName === $activeForm? 'active' : '';
+}
+?>
     <div id="container">
-        <div class="form-box active" id="login-form">
-        <form action="" method="POST">
+        <div class="form-box <?=isActiveForm('login',$activeForm);?>" id="login-form">
+        <form action="../backend/login_registration.php" method="POST">
             <h2>Login</h2>
+            <?=showError($errors['login']);?>
             <input type="email" id="email" name="email" placeholder="email" required>
             <input type="password" id="password" name="password" placeholder="password">
             <button type="submit" name="login">Login</button>
             <p>Don't have an account? <a href="#" onclick="showForm('Regisistration-form')">Register here</a></p>
         </form>
        </div>
-       <div class="form-box" id="Regisistration-form">
-        <form action="" method="POST">
+       <div class="form-box <?=isActiveForm('register',$activeForm);?>" id="Regisistration-form">
+        <form action="../backend/login_registration.php"  method="POST">
             <h2>Registration</h2>
+            <?=showError($errors['register']);?>
             <input type="text" id="first-name" name="first-name" placeholder="first name" required>
             <input type="text" id="last-name" name="last-name" placeholder="last name" required>
             <input type="text" id="bakery-name" name="bakery-name" placeholder="bakery name" required>
             <input type="email" id="email" name="email" placeholder="email" required>
             <input type="password" id="password" name="password" placeholder="password" required>
             <input type="password" id="confirm-password" name="confirm-password" placeholder="confirm password" required>
-            <button type="submit" name="Register">Register</button>
+            <button type="submit" name="register">Register</button>
             <p>Already have an account? <a href="#" onclick="showForm('login-form')">Login here</a></p>
         </form>
        </div>
     </div>
-    <script type="text/javascript" src="index.js"></script>
-</body>
-</html>
+<?php
+include("footer.html");
+?>
