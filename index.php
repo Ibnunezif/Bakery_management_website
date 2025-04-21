@@ -16,40 +16,37 @@ if (!isset($_SESSION['email'])) {
     <link href="./front_end/index.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=cake" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=dashboard" />
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    
 </head>
 
 <body>
 
-    <header><button id="side-bar-togle" onclick="sideBarToggle()"><span class="material-symbols-outlined">
-                menu
-            </span></button>
+    <header><button id="side-bar-togle" onclick="sideBarToggle()"><span class="material-icons">menu</span></button>
     <div id="info-div" class="info-div" onclick="activateProfileCard()">
         <button id="profile" class="profile" onclick="activateProfileCard()"><?= $_SESSION["bakery-name"][0] ?></button>
         <p id='bakery-name'><?= $_SESSION["bakery-name"] ?> Bakery</p>
         <form id="profile-form" action="" method="">
-            <input type="text" name='bakery-name' value="bakery: <?= $_SESSION["bakery-name"] ?> Bakery"/>
-            <input type="text" name="user-name" value="name: <?= $_SESSION['fist-name']?> <?=$_SESSION['last-name']?>"/>
-            <input type="text" name="user-email" value="Email:<?= $_SESSION["email"]?>"/> 
-            <input type="text" name="registration-date" value="Reg-date:<?= $_SESSION["registrationDate"]?>" readonly/> 
-            <button type="submit" name="submit-edit" >submit edit</button>
+            <input type="text" name='bakery-name' value="bakery name: <?=$_SESSION["bakery-name"] ?> Bakery" readonly/>
+            <input type="text" name="user-name" value="name: <?= $_SESSION['fist-name']?> <?=$_SESSION['last-name']?>" readonly/>
+            <input type="text" name="user-email" value="Email: <?= $_SESSION["email"]?>" readonly/> 
+            <p name="registration-date" value="Reg-date:<?= $_SESSION["registrationDate"]?>">Reg-date: <?= substr($_SESSION["registrationDate"],0,10)?></p>
+            <button type="button" id="toggle-edit" onclick="toggleEdit()">Edit</button>
+            <button type="submit" id="submit-edit" name="submit-edit" style="display:none" >save</button>
         </form>
     </div>
-        <button id="logout" onclick="window.location.href='./backend/logout.php'">Logout</button>
+        <button id="logout" onclick="window.location.href='./backend/logout.php'"><span class="material-icons">logout</span> Logout</button>
     </header>
     <div id="hidder" class="" onclick="sideBarToggle(); deactivateProfileCard();"></div>
     <div id="cover-for-large" onclick="deactivateProfileCardForLargeScreen();"></div>
     <section id="content-section">
         <aside class="">
-            <button class="side-bar-card active-effect" id="dashboard-button" onclick="showMain('dashboard')" draggable="true"><span class="material-symbols-outlined">dashboard</span>Dashboard</button>
-            <button class="side-bar-card" id="product-button" onclick="showMain('product')" draggable="true"></span>Product</button>
-            <button class="side-bar-card" id="solled-button" onclick="showMain('solled')" draggable="true">Sold</button>
-            <button class="side-bar-card" id="delivered-button" onclick="showMain('delivered')" draggable="true">Delivered</button>
-            <button class="side-bar-card" id="report-button" onclick="showMain('report')" draggable="true">Report</button>
+            <button class="side-bar-card active-effect" id="dashboard-button" onclick="showMain('dashboard')" draggable="true"><span class="material-icons">dashboard</span> Dashboard</button>
+            <button class="side-bar-card" id="product-button" onclick="showMain('product')" draggable="true"><span class="material-icons">bakery_dining</span> Product</button>
+            <button class="side-bar-card" id="solled-button" onclick="showMain('solled')" draggable="true"><span class="material-icons">shopping_basket</span> Sold</button>
+            <button class="side-bar-card" id="delivered-button" onclick="showMain('delivered')" draggable="true"><span class="material-icons">local_shipping</span> Delivered</button>
+            <button class="side-bar-card" id="report-button" onclick="showMain('report')" draggable="true"><span class="material-icons">analytics</span> Report</button>
         </aside>
         <main>
             <div id="dashboard" class="main-card show">

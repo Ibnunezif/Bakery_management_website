@@ -81,22 +81,27 @@ main {
     top:1px;
     transition: 0.3s;
     font-size: 1.5em;
-    text-align: center;
+    text-align: start;
     padding:5px 15px;
     font-family: "Poppins",serif;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    gap:10px;
     cursor:pointer;
     outline: none;
     background-color: #eee;
 }
-.side-bar-card:hover{
-    background: linear-gradient(to left,#0C7060,#427618);;
+.side-bar-card:hover .material-icons{
     color:#F6F4F2;
     border-radius:6px; 
-    
 }
+.side-bar-card:hover{
+    background: linear-gradient(to left,#0C7060,#427618);
+    color:#F6F4F2;
+    border-radius:6px; 
+}
+
 .main-card{
     display: none;
 }
@@ -108,19 +113,21 @@ main {
     box-shadow: 0px 0px 1px #0C7060;
     padding: 10px;
 }
-.material-symbols-outlined {
-    font-variation-settings:
-    'FILL' 0,
-    'wght' 500,
-    'GRAD' 1,
-    'opsz' 100;
-    padding: 0 10px;
-  }
+  .material-icons {
+    font-size: 30px;
+    vertical-align: middle;
+    color:#0C7060;
+} 
 .active-effect{
     background: linear-gradient(to left,#0C7060,#427618);
     color:#F6F4F2;
     border-radius: 6px;
 }
+.active-effect .material-icons{
+    color:#F6F4F2;
+    border-radius: 6px;
+}
+
 #bakery-name{
     font-size: 2em;
     color: #fff;
@@ -137,7 +144,7 @@ button#logout{
     padding: 12px;
     border-radius: 6px;
     height:40px;
-    font-size: 18px;
+    font-size: 1.2em;
     font-weight: 500;
     cursor:pointer;
     outline: none;
@@ -153,6 +160,10 @@ button#logout{
 button#logout:hover{
     background: linear-gradient(to left,#233f0c,#074137);
     color:#eee;
+}
+button#logout>span{
+    font-size: 1.2em;
+    color:#F6F4F2;
 }
 .profile{
     width:40px;
@@ -201,7 +212,7 @@ button#logout:hover{
 .profile-form input{
   width:90%;
   padding-left:10px;
-  height: 40px;
+  height: 30px;
   margin:5px 0;
   border-radius:6px;
   border:none;
@@ -211,6 +222,15 @@ button#logout:hover{
   background-color:#F6F4F2;
   color:#0C7060;
   transition:0.3s;
+}
+.profile-form input[readOnly]{
+cursor:default;
+}
+.profile-form input:not([readOnly]) {
+    background-color: #e3f2fd; 
+    border: 2px solid #42a5f5;
+    color: #074137; 
+    transition: 0.3s ease;
 }
 .profile-form button{
     width:94%;
@@ -222,7 +242,7 @@ button#logout:hover{
     outline:none;
     box-shadow:0px 0px 2px #F6F4F2;
     font-size:1.2em;
-    margin-top:40px;
+    margin-top:20px;
     color:#F6F4F2;
     cursor: pointer;
     background:linear-gradient(to left,#0C7060,#427618); ;
@@ -253,16 +273,21 @@ button#logout:hover{
     justify-content: center;
     transition:0.3s;
     padding:5px;
-    height: 80vh;
+    height: 85vh;
     max-width:400px;
     flex-direction: column;
     background: linear-gradient(to left,#233f0c,#074137);
+ }
+ .active-prof-div p{
+    color:#F6F4F2;
+    font-size: 0.7em;
  }
  .active-prof-div:hover{
     color:#F6F4F2;
     box-shadow: 0px 0px 1.5px #F6F4F2;
     border-radius: 6px;
  }
+
  @media (min-width:450px){
  .cover-for-large{
     width: 100%;

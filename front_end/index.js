@@ -88,3 +88,25 @@ function deactivateProfileCardForLargeScreen(){
     formElements.style.display="none";
     deactivateProfileCard();
 }
+
+//toggle the edit button to edit the profile information
+//for home page
+function toggleEdit() {
+    const form = document.getElementById('profile-form');
+    const inputs = form.querySelectorAll('input');
+    const submitButton = document.getElementById('submit-edit');
+    const editButton=document.getElementById("toggle-edit");
+    let isReadOnly = inputs[0].hasAttribute('readonly');
+
+    inputs.forEach(input => {
+        if (isReadOnly) {
+            input.removeAttribute('readonly'); 
+            submitButton.style.display="block";
+            editButton.innerText="un-edit";
+        } else {
+            input.setAttribute('readonly', true); 
+            submitButton.style.display="none";
+            editButton.innerText="Edit";
+        }
+    });
+}

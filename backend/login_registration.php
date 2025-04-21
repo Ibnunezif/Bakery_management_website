@@ -13,16 +13,16 @@ if (isset($_POST['register'])){
             $checkEmail=$conn->query("SELECT email from users where email ='$userEmail'");
             if ($checkEmail->num_rows>0){
                 $_SESSION["register_error"]="The email is already registered!";
-                $_SESSION['active_form']="register";
+                $_SESSION['active_form']="register";      
             }else{
                 $conn->query("INSERT INTO users (firstName,lastName,bakeryName,email,password) values ('$firstName','$lastName','$bakeryName','$userEmail','$password')");
-                header("Location:../front_end/loginandRegistration.php");
             }
     }else{
-         $_SESSION["register_error"]="The confirmation password not match.";
+         $_SESSION["register_error"]="The confirmation password is not match.";
          $_SESSION['active_form']="register";
-         header("Location:../front_end/loginandRegistration.php");
+        
     }
+    header("Location:../front_end/loginandRegistration.php");
     exit();
 }
 
