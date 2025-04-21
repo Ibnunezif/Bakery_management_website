@@ -34,3 +34,57 @@ function showForm(formId){
 document.querySelectorAll(".form-box").forEach(form=>form.classList.remove("active"));
 document.getElementById(formId).classList.add("active");
 }
+
+
+
+//To show  the profile card when clicked on the profile icon and text
+//for home page
+function activateProfileCard(){
+   const formElements=document.getElementById("profile-form");
+   document.getElementById("info-div").classList.remove("info-div");
+   document.getElementById("info-div").classList.add("active-prof-div");
+   document.getElementById("profile").classList.remove("profile");
+   document.getElementById("profile").classList.add("active-prof");
+   const hidder = document.getElementById("hidder");
+   hidder.classList.add("show");
+   formElements.classList.add("profile-form");
+   formElements.style.display="flex";
+
+//    for large sceeen
+const cover = document.getElementById("cover-for-large");
+cover.classList.add("cover-for-large");
+}
+
+//to hide the profile card when clicked on the hidder or outside the profile card
+//for home page
+function deactivateProfileCard(){
+    const formElements=document.getElementById("profile-form");
+    document.getElementById("info-div").classList.add("info-div");
+    document.getElementById("info-div").classList.remove("active-prof-div");
+    document.getElementById("profile").classList.add("profile");
+    document.getElementById("profile").classList.remove("active-prof");
+    const hidder = document.getElementById("hidder");
+    hidder.classList.remove("show");
+    formElements.classList.remove("profile-form");
+    formElements.style.display="none";
+    const asideElements = document.getElementsByTagName("aside");
+    if (asideElements.length > 0) {
+        asideElements[0].classList.remove("show");
+    }
+    deactivateProfileCardForLargeScreen();
+}
+
+//to hide the profile card when clicked on the hidder or outside the profile card
+//for home page large screens
+function deactivateProfileCardForLargeScreen(){
+    const formElements=document.getElementById("profile-form");
+    document.getElementById("info-div").classList.add("info-div");
+    document.getElementById("info-div").classList.remove("active-prof-div");
+    document.getElementById("profile").classList.add("profile");
+    document.getElementById("profile").classList.remove("active-prof");
+    const cover = document.getElementById("cover-for-large");
+    cover.classList.remove("cover-for-large");
+    formElements.classList.remove("profile-form");
+    formElements.style.display="none";
+    deactivateProfileCard();
+}
