@@ -28,10 +28,21 @@ if (!isset($_SESSION['email'])) {
     <header><button id="side-bar-togle" onclick="sideBarToggle()"><span class="material-symbols-outlined">
                 menu
             </span></button>
-        <div id="info-div"><button id="profile"><?= $_SESSION["bakery-name"][0] ?></button><p id='bakery-name'><?= $_SESSION["bakery-name"] ?> Bakery</p></div>
+    <div id="info-div" class="info-div" onclick="activateProfileCard()">
+        <button id="profile" class="profile" onclick="activateProfileCard()"><?= $_SESSION["bakery-name"][0] ?></button>
+        <p id='bakery-name'><?= $_SESSION["bakery-name"] ?> Bakery</p>
+        <form id="profile-form" action="" method="">
+            <input type="text" name='bakery-name' value="bakery: <?= $_SESSION["bakery-name"] ?> Bakery"/>
+            <input type="text" name="user-name" value="name: <?= $_SESSION['fist-name']?> <?=$_SESSION['last-name']?>"/>
+            <input type="text" name="user-email" value="Email:<?= $_SESSION["email"]?>"/> 
+            <input type="text" name="registration-date" value="Reg-date:<?= $_SESSION["registrationDate"]?>" readonly/> 
+            <button type="submit" name="submit-edit" >submit edit</button>
+        </form>
+    </div>
         <button id="logout" onclick="window.location.href='./backend/logout.php'">Logout</button>
     </header>
-    <div id="hidder" class="" onclick="sideBarToggle()"></div>
+    <div id="hidder" class="" onclick="sideBarToggle(); deactivateProfileCard();"></div>
+    <div id="cover-for-large" onclick="deactivateProfileCardForLargeScreen();"></div>
     <section id="content-section">
         <aside class="">
             <button class="side-bar-card active-effect" id="dashboard-button" onclick="showMain('dashboard')" draggable="true"><span class="material-symbols-outlined">dashboard</span>Dashboard</button>

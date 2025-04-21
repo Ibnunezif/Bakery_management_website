@@ -148,12 +148,13 @@ button#logout{
     justify-content: center;
     box-shadow: 0px 0px 1.5px #F6F4F2;
     align-items: center;
+    margin-left:auto;
 }
 button#logout:hover{
     background: linear-gradient(to left,#233f0c,#074137);
     color:#eee;
 }
-#profile{
+.profile{
     width:40px;
     height: 40px;
     background-color:transparent;
@@ -172,7 +173,7 @@ button#logout:hover{
     cursor: pointer;
     box-shadow: 0px 0px 1.5px #F6F4F2;
 }
-#info-div{
+.info-div{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,6 +189,93 @@ button#logout:hover{
  background: linear-gradient(to left,#233f0c,#074137);
 }
 
+/* after profile card is activated the buttom class will be added */
+
+#profile-form{
+  display:none;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+}
+.profile-form input{
+  width:90%;
+  padding-left:10px;
+  height: 40px;
+  margin:5px 0;
+  border-radius:6px;
+  border:none;
+  outline:none;
+  box-shadow:0px 0px 1.5px #F6F4F2;
+  font-size:1em;
+  background-color:#F6F4F2;
+  color:#0C7060;
+  transition:0.3s;
+}
+.profile-form button{
+    width:94%;
+    padding-left:10px;
+    height: 40px;
+    margin:5px 0;
+    border-radius:6px;
+    border:none;
+    outline:none;
+    box-shadow:0px 0px 2px #F6F4F2;
+    font-size:1.2em;
+    margin-top:40px;
+    color:#F6F4F2;
+    cursor: pointer;
+    background:linear-gradient(to left,#0C7060,#427618); ;
+    transition:0.3s;
+}
+
+.active-prof{
+    width:100px;
+    height: 100px;
+    background-color:transparent;
+    border: none;
+    outline: none;
+    color: #F6F4F2;
+    font-size: 34pt;
+    font-weight: 900;
+    border-radius: 50%;
+    box-shadow: 0px 0px 2px #F6F4F2;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+ .active-prof-div{
+    display: flex;
+    position:fixed;
+    border-radius: 6px;
+    top:16px;
+    align-items: center;
+    justify-content: center;
+    transition:0.3s;
+    padding:5px;
+    height: 80vh;
+    max-width:400px;
+    flex-direction: column;
+    background: linear-gradient(to left,#233f0c,#074137);
+ }
+ .active-prof-div:hover{
+    color:#F6F4F2;
+    box-shadow: 0px 0px 1.5px #F6F4F2;
+    border-radius: 6px;
+ }
+ @media (min-width:450px){
+ .cover-for-large{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 80%);
+    z-index: 6;
+    display: block;
+    transition: opacity 0.5s ease;
+ }
+}
 @media (max-width:450px){
     #profile {
         width:30px;
