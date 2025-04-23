@@ -102,7 +102,7 @@ function toggleEdit() {
         if (isReadOnly) {
             input.removeAttribute('readonly'); 
             submitButton.style.display="block";
-            editButton.innerText="un-edit";
+            editButton.innerText="cancel";
         } else {
             input.setAttribute('readonly', true); 
             submitButton.style.display="none";
