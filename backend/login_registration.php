@@ -7,6 +7,7 @@ if (isset($_POST['register'])){
     $lastName=$_POST["last-name"];
     $bakeryName=$_POST["bakery-name"];
     $userEmail=$_POST["email"];
+    $role=$_POST["role"];
     $password=password_hash($_POST["password"],PASSWORD_DEFAULT);
     $confirmPassword=$_POST["confirm-password"];
     if (password_verify($confirmPassword,$password)){
@@ -15,7 +16,7 @@ if (isset($_POST['register'])){
                 $_SESSION["register_error"]="The email is already registered!";
                 $_SESSION['active_form']="register";      
             }else{
-                $conn->query("INSERT INTO users (firstName,lastName,bakeryName,email,password) values ('$firstName','$lastName','$bakeryName','$userEmail','$password')");
+                $conn->query("INSERT INTO users (firstName,lastName,bakeryName,email,password,role) values ('$firstName','$lastName','$bakeryName','$userEmail','$password','$role')");
             }
     }else{
          $_SESSION["register_error"]="The confirmation password is not match.";
@@ -37,8 +38,9 @@ if (isset($_POST["login"])){
             $_SESSION['fist-name']=$db_row['firstName'];
             $_SESSION['last-name']=$db_row['lastName'];
             $_SESSION['email']=$db_row['email'];
-            $_SESSION['registrationDate']=$db_row['registrationDate'];
+            $_SESSION['registrationDate']=$db_row['regDate'];
             $_SESSION['bakery-name']=$db_row['bakeryName'];
+            $_SESSION['role']=$db_row['role'];
             header("Location:../index.php");
             exit();
         }
