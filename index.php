@@ -43,10 +43,11 @@ if (!isset($_SESSION['email'])) {
     <section id="content-section">
         <aside class="">
             <button class="side-bar-card active-effect" id="dashboard-button" onclick="showMain('dashboard')" draggable="true"><span class="material-icons">dashboard</span> Dashboard</button>
-            <button class="side-bar-card" id="product-button" onclick="showMain('product')" draggable="true"><span class="material-icons">bakery_dining</span> Product</button>
-            <button class="side-bar-card" id="solled-button" onclick="showMain('solled')" draggable="true"><span class="material-icons">shopping_basket</span> Sold</button>
-            <button class="side-bar-card" id="delivered-button" onclick="showMain('delivered')" draggable="true"><span class="material-icons">local_shipping</span> Delivered</button>
+            <button class="side-bar-card" id="purchased-button" onclick="showMain('purchased')" draggable="true"><span class="material-icons">fastfood</span>Add ingredient</button>
+            <button class="side-bar-card" id="product-button" onclick="showMain('product')" draggable="true"><span class="material-icons">lunch_dining</span>Add Product</button>
+            <button class="side-bar-card" id="solled-button" onclick="showMain('solled')" draggable="true"><span class="material-icons">shopping_basket</span>Add Sold</button>
             <button class="side-bar-card" id="report-button" onclick="showMain('report')" draggable="true"><span class="material-icons">analytics</span> Report</button>
+            <button class="side-bar-card" id="manage-workers-button" onclick="showMain('manage-workers')" draggable="true"><span class="material-icons">groups</span>workers</button>
         </aside>
         <main>
             <div id="dashboard" class="main-card show">
@@ -64,6 +65,14 @@ if (!isset($_SESSION['email'])) {
             <div id="delivered" class="main-card">
                 <h1>Delivered</h1>
                 <p>Check your delivered items here.</p>
+            </div>
+            <div id="manage-workers" class="main-card">
+                <h1>mange workers</h1>
+               
+            </div>
+            <div id="purchased" class="main-card">
+                <h1>purchased</h1>
+    
             </div>
             <div id="report" class="main-card">
                 <h1>Report</h1>
