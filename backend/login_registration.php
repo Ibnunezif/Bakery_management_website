@@ -41,6 +41,7 @@ if (isset($_POST["login"])){
             $_SESSION['registrationDate']=$db_row['regDate'];
             $_SESSION['bakery-name']=$db_row['bakeryName'];
             $_SESSION['role']=$db_row['Role'];
+            $_SESSION['userId']=$db_row['userId'];
             header("Location:../index.php");
             exit();
         }

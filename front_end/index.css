@@ -106,7 +106,10 @@ main {
     display: none;
 }
 .main-card.show{
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     min-height: 100vh;
     background-color: #F6F4F2;
     border-radius: 10px;
@@ -235,6 +238,7 @@ cursor:default;
     color: #074137; 
     transition: 0.3s ease;
 }
+
 .profile-form button{
     width:94%;
     padding-left:10px;
@@ -290,6 +294,125 @@ cursor:default;
     box-shadow: 0px 0px 1.5px #F6F4F2;
     border-radius: 6px;
  }
+ input{
+    width:90%;
+    max-width:400px;
+    padding:12px;
+    background:#eee;
+    margin-bottom:20px;
+    border:1px solid #ccc;
+    outline:none;
+    border-radius:6px;
+    font-size:16px;
+    color:#333;
+}
+select{
+    width:90%;
+    max-width:400px;
+    padding:12px;
+    background:#eee;
+    margin-bottom:20px;
+    border:1px solid #ccc;
+    outline:none;
+    border-radius:6px;
+    font-size:16px;
+    color:#333;
+}
+ .main-card-forms{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+    max-width:400px;
+    padding: 30px 10px;
+    box-shadow: 0px 1px 5px #101212;
+    border-radius: 10px;
+ }
+ .main-card-forms>button{
+        width:100%;
+        padding:12px;
+        background: linear-gradient(to left,#0C7060,#427618);
+        border:none;
+        border-radius:6px;
+        font-size:18px;
+        font-weight: 500;
+        color:#fff;
+        cursor:pointer;
+        margin-bottom: 20px;;
+        transition:0.5s;
+ }
+.main-card-forms>button:hover{
+    background: linear-gradient(to left,#233f0c,#074137);
+ }
+ .main-card>h1{
+    font-size: 34px;
+    text-align: center;
+    margin-bottom: 20px;
+    color:#0C7060;
+ }
+ .dashboard-grid {
+    display: grid;
+    width:95%;
+    max-width: 1200px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.dashboard-card {
+    background: #f6f4f2;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 300px;;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    max-height: 400px;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-card span.material-icons {
+    font-size: 48px;
+    color: #0c7060;
+    margin-bottom: 10px;
+}
+
+.dashboard-card h2 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.dashboard-card p {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.dashboard-card button {
+    background: linear-gradient(to left, #0c7060, #427618);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.3s ease;
+}
+
+.dashboard-card button:hover {
+    background: linear-gradient(to left, #074137, #233f0c);
+}
 
  @media (min-width:450px){
  .cover-for-large{
