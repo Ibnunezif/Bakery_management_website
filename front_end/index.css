@@ -118,6 +118,9 @@ main {
     vertical-align: middle;
     color:#0C7060;
 } 
+.menu-icon{
+    color:#eee;
+}
 .active-effect{
     background: linear-gradient(to left,#0C7060,#427618);
     color:#F6F4F2;
@@ -310,6 +313,9 @@ cursor:default;
     #bakery-name{
         font-size: 1.2em;
     }
+    .side-bar-card>.material-icons{
+        display: none;
+    }
     aside{
         position: fixed;
         min-width:60%;
@@ -323,6 +329,7 @@ cursor:default;
     }
     #side-bar-togle{
         display: block;
+        color: #eee;
     }
     #hidder{
      width:100vw;

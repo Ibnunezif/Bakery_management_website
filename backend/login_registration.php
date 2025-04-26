@@ -40,7 +40,7 @@ if (isset($_POST["login"])){
             $_SESSION['email']=$db_row['email'];
             $_SESSION['registrationDate']=$db_row['regDate'];
             $_SESSION['bakery-name']=$db_row['bakeryName'];
-            $_SESSION['role']=$db_row['role'];
+            $_SESSION['role']=$db_row['Role'];
             header("Location:../index.php");
             exit();
         }
