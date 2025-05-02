@@ -1,15 +1,8 @@
 <?php
 session_start();
 $workersList=$_SESSION['workerList'];
-
-
-
 if (!isset($_SESSION['email']) || $_SESSION['role']!='manager'){
     header("Location:./index.php");
-}
-
-if (!isset($_SESSION['workerCount'])) {
-    echo "workerCount is not set in the session.";
 }
 ?>
 
