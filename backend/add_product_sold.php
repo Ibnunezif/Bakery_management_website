@@ -18,6 +18,26 @@ if (isset($_POST["add-product"])){
     if ($conn->query($sql) === TRUE) {
         $_SESSION["message"] = "New product added successfully";
         $_SESSION["product_name"] =  $product_name;
+
+        //to show the updated product data on the dashboard
+            
+            $queryForProd="SELECT * FROM product where userId= $user_id";
+
+            
+            $prodResult=$conn->query($queryForProd);
+        
+            $quantity=0;
+            $prodCost=0;
+            $soldQuantity=0;
+            $soldCost=0;
+            while ($row=$prodResult->fetch_assoc()){
+                $quantity+=$row["quantity"];
+                $prodCost+=$row["unitCost"]*$row["quantity"];
+            }
+
+            $_SESSION['unitCost']=$prodCost;
+            $_SESSION['quantity']=$quantity;
+
         header("Location: ../$role.php");
         exit();
     } else {
@@ -40,6 +60,25 @@ if (isset($_POST["add-sold"])){
     if ($conn->query($sql) === TRUE) {
         $_SESSION["message"] = "sold product added successfully";
         $_SESSION["product_name"] =  $product_name;
+
+        // to show the update sold data on the dashboard
+        $queryForsales="SELECT * from sales where userId= $user_id";
+
+            
+            $salesResult=$conn->query($queryForsales);
+
+    
+            $soldQuantity=0;
+            $soldCost=0;
+         
+
+            while ($row=$salesResult->fetch_assoc()){
+                $soldQuantity+=$row["soldQuantity"];
+                $soldCost+=$row["salePrice"]*$row["soldQuantity"];
+            }
+
+            $_SESSION['soldQuantity']=$soldQuantity;
+            $_SESSION['soldPrice']=$soldCost;
         header("Location: ../$role.php");
         exit();
     } else {

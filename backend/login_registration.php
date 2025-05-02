@@ -58,12 +58,12 @@ if (isset($_POST["login"])){
             $soldCost=0;
             while ($row=$prodResult->fetch_assoc()){
                 $quantity+=$row["quantity"];
-                $prodCost+=$row["unitCost"];
+                $prodCost+=$row["unitCost"]*$row["quantity"];
             }
 
             while ($row=$salesResult->fetch_assoc()){
                 $soldQuantity+=$row["soldQuantity"];
-                $soldCost+=$row["salePrice"];
+                $soldCost+=$row["salePrice"]*$row["soldQuantity"];
             }
 
             $_SESSION['soldQuantity']=$soldQuantity;
