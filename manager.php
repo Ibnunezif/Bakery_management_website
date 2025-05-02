@@ -1,7 +1,15 @@
 <?php
 session_start();
+$workersList=$_SESSION['workerList'];
+
+
+
 if (!isset($_SESSION['email']) || $_SESSION['role']!='manager'){
     header("Location:./index.php");
+}
+
+if (!isset($_SESSION['workerCount'])) {
+    echo "workerCount is not set in the session.";
 }
 ?>
 
@@ -42,7 +50,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='manager'){
     <section id="content-section">
         <aside class="">
             <button class="side-bar-card active-effect" id="dashboard-button" onclick="showMain('dashboard')" draggable="true"><span class="material-icons">dashboard</span> Dashboard</button>
-            <button class="side-bar-card" id="purchased-button" onclick="showMain('purchased')" draggable="true"><span class="material-icons">fastfood</span>Add ingredient</button>
             <button class="side-bar-card" id="product-button" onclick="showMain('product')" draggable="true"><span class="material-icons">lunch_dining</span>Add Product</button>
             <button class="side-bar-card" id="solled-button" onclick="showMain('solled')" draggable="true"><span class="material-icons">shopping_basket</span>Add Sold</button>
             <button class="side-bar-card" id="manage-workers-button" onclick="showMain('manage-workers')"  draggable="true"><span class="material-icons">groups</span>workers</button>
@@ -55,20 +62,75 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='manager'){
                 <p>Welcome to the dashboard!</p>
             </div>
             <div id="product" class="main-card">
-                <h1>Product</h1>
-                <p>Manage your products here.</p>
+                <h1>Add Product</h1>
+                 <form class='main-card-forms' method='post' action='./backend/add_product_sold.php'>
+                    <input type="text" id="product-quantity" name="product-quantity" placeholder="product quantity" required>
+                    <select name="product-type" id="product-name" required>
+                        <option value="" disabled selected>---select product---</option>
+                        <option value="bread">bread</option>
+                        <option value="cake">cake</option>
+                        <option value="cookie">cookie</option>
+                        <option value="pastry">pastry</option>
+                    </select>
+                    <input type="text" id="unit-price" name="unit-price" placeholder="unit price" required>
+                    <button name="add-product" type="submit">Add Product</button>
+                </form>
+        
+
             </div>
             <div id="solled" class="main-card">
-                <h1>Sold</h1>
-                <p>View your sold items here.</p>
+                <h1> Add Sold Items</h1>
+                <form class='main-card-forms' method='post' action='./backend/add_product_sold.php'>
+                    <input type="text" id="sold-quantity" name="sold-quantity" placeholder="sold quantity" required>
+                    <input type="text" id="sale-price" name="sale-price" placeholder="unit sale price" required>
+                    <select name="outline" id="outline" required>
+                        <option value="" disabled selected>---select outline---</option>
+                        <option value="delivered">delivered</option>
+                        <option value="solled in shop">sold in shop</option>
+                    </select>
+                    <select name="product-type" id="product-name" required>
+                        <option value="" disabled selected>---select product---</option>
+                        <option value="bread">bread</option>
+                        <option value="cake">cake</option>
+                        <option value="cookie">cookie</option>
+                        <option value="pastry">pastry</option>
+                    </select>
+                    <button name="add-sold" type="submit">Add Sold</button>
+                </form>
+
             </div>
             <div id="delivered" class="main-card">
                 <h1>Delivered</h1>
                 <p>Check your delivered items here.</p>
             </div>
             <div id="manage-workers" class="main-card">
-                <h1>mange workers</h1>
-               
+                <h1>mange workers </h1>
+                <table>
+                    <th>
+                        <td>R.no</td>
+                        <td>First Name</td>
+                        <td>Last Name</td>
+                        <td>Email</td>
+                        <td>salary</td>
+                        <td>total product</td>
+                        <td>total sold</td>
+                        <td>Registration Date</td>
+                    </th>
+                    <?php foreach ($workersList as $worker): ?>
+                        <tr>
+                            <td>1</td>
+                            <td><?= $worker["firstName"] ?></td>
+                            <td><?= $worker["lastName"] ?></td>
+                            <td><?= $worker["email"] ?></td>
+                            <td><?= $worker["salary"] ?? 0 ?></td>
+                            <td><?= $worker["totalProduct"] ?? 0 ?></td>
+                            <td><?= $worker["totalSold"] ?? 0 ?></td>
+                            <td><?= substr($worker["regDate"],0,10) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+
+                </table>
+
             </div>
             <div id="purchased" class="main-card">
                 <h1>purchased</h1>

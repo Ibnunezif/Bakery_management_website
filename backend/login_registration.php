@@ -44,12 +44,36 @@ if (isset($_POST["login"])){
             $_SESSION['userId']=$db_row['userId'];
 
 
-            $userId=$db_row['userId'];
+            
+
+
+            //if role is manager we are going to fetch all worker data from the database
+            if ($db_row['Role']=='manager'){
+                
+                    $bekaryName=$_SESSION["bakery-name"];
+                    $workerQuery="SELECT * from users where bakeryName='$bekaryName' and Role='worker'";
+                    
+        
+                    $result=$conn->query($workerQuery);
+                    $resultList=[];
+                    while ($row=$result->fetch_assoc()){
+                        $resultList[]=$row; 
+                    }
+        
+                    $_SESSION["workerList"]=$resultList ?? [];
+                    
+            }
+
+
+
+            //if role is worker we are going to fetch the product and sales data from the database
+            if ($db_row['Role']=='worker'){
+                $userId=$db_row['userId'];
             $queryForsales="SELECT * from sales where userId= $userId";
             $queryForProd="SELECT * FROM product where userId= $userId";
 
-            
-            $prodResult=$conn->query($queryForProd);
+
+                $prodResult=$conn->query($queryForProd);
             $salesResult=$conn->query($queryForsales);
 
             $quantity=0;
@@ -70,6 +94,8 @@ if (isset($_POST["login"])){
             $_SESSION['soldPrice']=$soldCost;
             $_SESSION['unitCost']=$prodCost;
             $_SESSION['quantity']=$quantity;
+            }
+            
 
             header("Location:../index.php");
             exit();

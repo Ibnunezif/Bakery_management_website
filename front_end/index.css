@@ -416,6 +416,11 @@ select{
 .dashboard-card button:hover {
     background: linear-gradient(to left, #074137, #233f0c);
 }
+table{
+    width:700px;
+    overflow-x: scroll;
+    
+}
 
  @media (min-width:450px){
  .cover-for-large{

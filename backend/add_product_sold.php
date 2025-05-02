@@ -20,7 +20,7 @@ if (isset($_POST["add-product"])){
         $_SESSION["product_name"] =  $product_name;
 
         //to show the updated product data on the dashboard
-            
+        if ($role=='worker'){
             $queryForProd="SELECT * FROM product where userId= $user_id";
 
             
@@ -37,6 +37,23 @@ if (isset($_POST["add-product"])){
 
             $_SESSION['unitCost']=$prodCost;
             $_SESSION['quantity']=$quantity;
+        }
+
+        //data required for the manager page
+
+        if ($role=='manager'){
+            $bekaryName=$_SESSION["bakery-name"];
+            $workerQuery="SELECT * from users where bakeryName='Ramsi'";
+
+            $result=$conn->query($workerQuery);
+            $resultList=[];
+            while ($row=$result->fetch_assoc()){
+                $resultList[]=$row; 
+            }
+
+            $_SESSION["workerList"]=$resultList;
+            $_SESSION["workerCount"]=count($resultList);
+        }
 
         header("Location: ../$role.php");
         exit();
