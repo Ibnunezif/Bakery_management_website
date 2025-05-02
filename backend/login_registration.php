@@ -42,6 +42,35 @@ if (isset($_POST["login"])){
             $_SESSION['bakery-name']=$db_row['bakeryName'];
             $_SESSION['role']=$db_row['Role'];
             $_SESSION['userId']=$db_row['userId'];
+
+
+            $userId=$db_row['userId'];
+            $queryForsales="SELECT * from sales where userId= $userId";
+            $queryForProd="SELECT * FROM product where userId= $userId";
+
+            
+            $prodResult=$conn->query($queryForProd);
+            $salesResult=$conn->query($queryForsales);
+
+            $quantity=0;
+            $prodCost=0;
+            $soldQuantity=0;
+            $soldCost=0;
+            while ($row=$prodResult->fetch_assoc()){
+                $quantity+=$row["quantity"];
+                $prodCost+=$row["unitCost"];
+            }
+
+            while ($row=$salesResult->fetch_assoc()){
+                $soldQuantity+=$row["soldQuantity"];
+                $soldCost+=$row["salePrice"];
+            }
+
+            $_SESSION['soldQuantity']=$soldQuantity;
+            $_SESSION['soldPrice']=$soldCost;
+            $_SESSION['unitCost']=$prodCost;
+            $_SESSION['quantity']=$quantity;
+
             header("Location:../index.php");
             exit();
         }

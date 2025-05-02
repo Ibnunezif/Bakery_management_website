@@ -42,7 +42,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='worker'){
     <section id="content-section">
         <aside class="">
             <button class="side-bar-card active-effect" id="dashboard-button" onclick="showMain('dashboard')" draggable="true"><span class="material-icons">dashboard</span> Dashboard</button>
-            <button class="side-bar-card" id="purchased-button" onclick="showMain('purchased')" draggable="true"><span class="material-icons">fastfood</span>Add ingredient</button>
             <button class="side-bar-card" id="product-button" onclick="showMain('product')" draggable="true"><span class="material-icons">lunch_dining</span>Add Product</button>
             <button class="side-bar-card" id="solled-button" onclick="showMain('solled')" draggable="true"><span class="material-icons">shopping_basket</span>Add Sold</button>
         </aside>
@@ -53,7 +52,12 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='worker'){
         <!-- Add Product Section -->
         <div class="dashboard-card">
             <span class="material-icons">lunch_dining</span>
+        
             <h2>Add Product</h2>
+            <ul>
+                <li>total product <?=$_SESSION["quantity"]?></li>
+                <li>total cost <?=$_SESSION["unitCost"]?> birr</li> 
+            </ul>
             
             <button onclick="showMain('product')">Go to Add Product</button>
         </div>
@@ -62,22 +66,20 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='worker'){
         <div class="dashboard-card">
             <span class="material-icons">shopping_basket</span>
             <h2>Add Sold Items</h2>
+            <ul>
+                <li>you have sold <?=$_SESSION["soldQuantity"]?> products</li>
+                <li>you have genarated <?=$_SESSION["soldPrice"]?> birr income</li>
+            </ul>
             
             <button onclick="showMain('solled')">Go to Add Sold Items</button>
         </div>
 
         <!-- Add Purchased Ingredients Section -->
-        <div class="dashboard-card">
-            <span class="material-icons">fastfood</span>
-            <h2>Add Ingredients</h2>
-            <button onclick="showMain('purchased')">Go to Add Ingredients</button>
-        </div>
     </div>
 </div>
             <div id="product" class="main-card">
                 <h1>Add Product</h1>
-                 <form class='main-card-forms' method='post' action=''>
-                    <input type=hidden id="user-id" name="user-id" value="<?=$_SESSION['userId']?>" required>
+                 <form class='main-card-forms' method='post' action='./backend/add_product_sold.php'>
                     <input type="text" id="product-quantity" name="product-quantity" placeholder="product quantity" required>
                     <select name="product-type" id="product-name" required>
                         <option value="" disabled selected>---select product---</option>
@@ -87,15 +89,14 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='worker'){
                         <option value="pastry">pastry</option>
                     </select>
                     <input type="text" id="unit-price" name="unit-price" placeholder="unit price" required>
-                    <button type="submit">Add Product</button>
+                    <button name="add-product" type="submit">Add Product</button>
                 </form>
         
 
             </div>
             <div id="solled" class="main-card">
                 <h1> Add Sold Items</h1>
-                <form class='main-card-forms' method='post' action=''>
-                    <input type=hidden id="user-id" name="user-id" value="<?=$_SESSION['userId']?>" required>
+                <form class='main-card-forms' method='post' action='./backend/add_product_sold.php'>
                     <input type="text" id="sold-quantity" name="sold-quantity" placeholder="sold quantity" required>
                     <input type="text" id="sale-price" name="sale-price" placeholder="unit sale price" required>
                     <select name="outline" id="outline" required>
@@ -103,7 +104,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='worker'){
                         <option value="delivered">delivered</option>
                         <option value="solled in shop">sold in shop</option>
                     </select>
-                    <input type="text" id="product-id" name="product-id" placeholder="product id" required>
                     <select name="product-type" id="product-name" required>
                         <option value="" disabled selected>---select product---</option>
                         <option value="bread">bread</option>
@@ -111,70 +111,9 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='worker'){
                         <option value="cookie">cookie</option>
                         <option value="pastry">pastry</option>
                     </select>
-                    <button type="submit">Add Sold</button>
+                    <button name="add-sold" type="submit">Add Sold</button>
                 </form>
 
-            </div>
-            <div id="purchased" class="main-card">
-                <h1>Add purchased ingredient</h1>
-                <form  class='main-card-forms' method='post' action='' action="" method="POST">
-                    <input type=hidden id="user-id" name="user-id" value="<?=$_SESSION['userId']?>" required>
-                    <input type="text" id="ingredient-quantity" name="ingredient-quantity" placeholder="ingredient quantity" required>
-                    <input type="text" id="cost-per-unit" name="cost-per-unit" placeholder="cost per unit" required>
-                    <select name="ingredient-name" id="ingredient-name" required>
-                        <option value="" disabled selected>---select ingredient---</option>
-                        <option value="flour">flour</option>
-                        <option value="sugar">sugar</option>
-                        <option value="egg">egg</option>
-                        <option value="milk">milk</option>
-                        <option value="yeast">yeast</option>
-                        <option value="butter">butter</option>
-                        <option value="salt">salt</option>
-                        <option value="baking powder">baking powder</option>
-                        <option value="vanilla extract">vanilla extract</option>
-                        <option value="chocolate">chocolate</option>
-                        <option value="cream">cream</option>
-                        <option value="fruit">fruit</option>
-                        <option value="nuts">nuts</option>
-                        <option value="spices">spices</option>
-                        <option value="food coloring">food coloring</option>
-                        <option value="glazing">glazing</option>
-                        <option value="frosting">frosting</option>
-                        <option value="toppings">toppings</option>
-                        <option value="packaging">packaging</option>
-                        <option value="preservatives">preservatives</option>
-                        <option value="flavoring">flavoring</option>
-                        <option value="sweeteners">sweeteners</option>
-                        <option value="thickeners">thickeners</option>
-                        <option value="emulsifiers">emulsifiers</option>
-                        <option value="stabilizers">stabilizers</option>
-                        <option value="acidulants">acidulants</option>
-                        <option value="leavening agents">leavening agents</option>
-                        <option value="dough conditioners">dough conditioners</option>
-                        <option value="flour enhancers">flour enhancers</option>
-                        <option value="baking soda">baking soda</option>
-                        <option value="baking powder">baking powder</option>
-                        <option value="cornstarch">cornstarch</option>
-                        <option value="gelatin">gelatin</option>
-                        <option value="pectin">pectin</option>
-                        <option value="agar-agar">agar-agar</option>
-                        <option value="xanthan gum">xanthan gum</option>
-                        <option value="guar gum">guar gum</option>
-                        <option value="cocoa powder">cocoa powder</option>
-                        <option value="powdered sugar">powdered sugar</option>
-                        <option value="brown sugar">brown sugar</option>
-                        <option value="granulated sugar">granulated sugar</option>
-                        <option value="confectioners' sugar">confectioners' sugar</option>
-                        <option value="honey">honey</option>
-                        <option value="maple syrup">maple syrup</option>
-                        <option value="agave syrup">agave syrup</option>
-                        <option value="molasses">molasses</option>
-
-                        <option value="other">other</option>
-                    </select>
-                    <button type="submit">Add Ingredient</button>
-                </form>
-    
             </div>
         </main>
     </section>
