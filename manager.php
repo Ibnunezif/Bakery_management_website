@@ -4,6 +4,7 @@ $workersList=$_SESSION['workerList'];
 if (!isset($_SESSION['email']) || $_SESSION['role']!='manager'){
     header("Location:./index.php");
 }
+$rollNumber=1;
 ?>
 
 <!DOCTYPE html>
@@ -98,20 +99,24 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='manager'){
             </div>
             <div id="manage-workers" class="main-card">
                 <h1>mange workers </h1>
-                <table>
-                    <th>
-                        <td>R.no</td>
-                        <td>First Name</td>
-                        <td>Last Name</td>
-                        <td>Email</td>
-                        <td>salary</td>
-                        <td>total product</td>
-                        <td>total sold</td>
-                        <td>Registration Date</td>
-                    </th>
+            <div class="table-container">
+                <table class="worker-table">
+                    <thead>
+                        <tr>
+                        <th>R.no</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>salary</th>
+                        <th>total product</th>
+                        <th>total sold</th>
+                        <th>Registration Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     <?php foreach ($workersList as $worker): ?>
                         <tr>
-                            <td>1</td>
+                            <td><?=$rollNumber?></td>
                             <td><?= $worker["firstName"] ?></td>
                             <td><?= $worker["lastName"] ?></td>
                             <td><?= $worker["email"] ?></td>
@@ -120,10 +125,13 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='manager'){
                             <td><?= $worker["totalSold"] ?? 0 ?></td>
                             <td><?= substr($worker["regDate"],0,10) ?></td>
                         </tr>
+                        <?$rollNumber+=1?>
                     <?php endforeach; ?>
-
+                    </tbody>
                 </table>
-
+                <div id="add-wokers"><button class="worker-button">+</button> <p id="worker-parag">Add new workers</p> </div>
+            </div>
+                    
             </div>
             <div id="purchased" class="main-card">
                 <h1>purchased</h1>
