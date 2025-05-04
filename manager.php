@@ -41,6 +41,7 @@ $rollNumber=1;
     </header>
     <div id="hidder" class="" onclick="sideBarToggle(); deactivateProfileCard();"></div>
     <div id="cover-for-large" onclick="deactivateProfileCardForLargeScreen();"></div>
+    <div id="message-display-conatiner" onclick='closeDialog()'><div id="message-display"><p>This action delete the worker from the list!</p><button onclick="closeDialog()">cancel</button><button class="ok" onclick="confirmAction()">ok</button></div></div>
     <section id="content-section">
         <aside class="">
             <button class="side-bar-card active-effect" id="dashboard-button" onclick="showMain('dashboard')" draggable="true"><span class="material-icons">dashboard</span> Dashboard</button>
@@ -52,8 +53,40 @@ $rollNumber=1;
         <main>
             <div id="dashboard" class="main-card show">
                 <h1>Dashboard</h1>
-                <p>manager</p>
                 <p>Welcome to the dashboard!</p>
+                <div class="dashboard-grid">
+                    <!-- Add Product Section -->
+                    <div class="dashboard-card">
+                        <span class="material-icons">lunch_dining</span>
+                    
+                        <h2>Add Product</h2>
+                        <button onclick="showMain('product')">Go to Add Sold Items</button>
+                    </div>
+                    <!-- Add Sold Section -->
+                    <div class="dashboard-card">
+                        <span class="material-icons">shopping_basket</span>
+                        <h2>Add Sold</h2>
+                        <button onclick="showMain('solled')">Go to Add Sold Items</button>
+                    </div>
+                    <!-- workers section -->
+                    <div class="dashboard-card">
+                    <span class="material-icons">groups</span>
+                        <h2>workers</h2>
+                        <ul>
+                            <li>total workers <?=count($workersList)?></li>
+                            <li>total product <?=array_sum(array_column($workersList, 'totalProduct'))?></li>
+                        </ul>
+                        <button onclick="showMain('manage-workers')">Go to Add Sold Items</button>
+                    </div>
+
+                    <!-- report section -->
+                    <div class="dashboard-card">
+                        <span class="material-icons">analytics</span>
+                        <h2>Report</h2>
+                        <button onclick="showMain('report')">Go to Report</button>  
+                    </div>
+
+                </div>
             </div>
             <div id="product" class="main-card">
                 <h1>Add Product</h1>
@@ -111,6 +144,7 @@ $rollNumber=1;
                         <th>total product</th>
                         <th>total sold</th>
                         <th>Registration Date</th>
+                        <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -120,16 +154,20 @@ $rollNumber=1;
                             <td><?= $worker["firstName"] ?></td>
                             <td><?= $worker["lastName"] ?></td>
                             <td><?= $worker["email"] ?></td>
-                            <td><?= $worker["salary"] ?? 0 ?></td>
+                            <td><?= $worker["Salary"] ?? 0 ?></td>
                             <td><?= $worker["totalProduct"] ?? 0 ?></td>
                             <td><?= $worker["totalSold"] ?? 0 ?></td>
                             <td><?= substr($worker["regDate"],0,10) ?></td>
+                            <td>
+                                <button onclick="showDialog(<?= $worker['userId']?>)">delete</button>
+                                <button onclick="window.location.href='./front_end/editWorkersData.php?workerId=<?=$worker['userId']?>'">edit</button>
+                            </td>
                         </tr>
                         <?$rollNumber+=1?>
                     <?php endforeach; ?>
                     </tbody>
                 </table>
-                <div id="add-wokers"><button class="worker-button">+</button> <p id="worker-parag">Add new workers</p> </div>
+                <div id="add-wokers"><button onclick="window.location.href='./front_end/workerRegistrationForm.php'" class="worker-button">+</button> <p id="worker-parag">Add new workers</p> </div>
             </div>
                     
             </div>

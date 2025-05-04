@@ -20,8 +20,7 @@ if (isset($_POST['register'])){
             }
     }else{
          $_SESSION["register_error"]="The confirmation password is not match.";
-         $_SESSION['active_form']="register";
-        
+         $_SESSION['active_form']="register";   
     }
     header("Location:../front_end/loginandRegistration.php");
     exit();
@@ -68,12 +67,12 @@ if (isset($_POST["login"])){
 
             //if role is worker we are going to fetch the product and sales data from the database
             if ($db_row['Role']=='worker'){
-                $userId=$db_row['userId'];
+            $userId=$db_row['userId'];
             $queryForsales="SELECT * from sales where userId= $userId";
             $queryForProd="SELECT * FROM product where userId= $userId";
 
 
-                $prodResult=$conn->query($queryForProd);
+            $prodResult=$conn->query($queryForProd);
             $salesResult=$conn->query($queryForsales);
 
             $quantity=0;

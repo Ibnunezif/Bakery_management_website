@@ -110,3 +110,38 @@ function toggleEdit() {
         }
     });
 }
+
+let itemId = null; 
+function showDialog(id) {
+    itemId = id; 
+    document.getElementById('message-display-conatiner').style.display = 'flex';
+    
+}
+
+function confirmAction() {
+    
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = './backend/deleteWorkers.php';
+     
+
+    // Create an input element for the ID
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'id'; // Name of the input
+    input.value = itemId; // Use the stored ID
+    console.log(itemId);
+
+    // Append the input to the form
+    form.appendChild(input);
+
+    // Append the form to the body
+    document.body.appendChild(form);
+
+    // Submit the form
+    form.submit();
+}
+
+function closeDialog() {
+    document.getElementById('message-display-conatiner').style.display = 'none';
+}
