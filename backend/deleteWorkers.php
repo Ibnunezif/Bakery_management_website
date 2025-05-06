@@ -14,7 +14,7 @@ session_start();
     $_SESSION['worker-success-message']="You have deleted $firstName $lastNmae successfully!";
 
     //to show updated report
-    $workerQuery="SELECT * from users where bakeryName='$bakeryName' and Role='worker'";
+    $workerQuery="SELECT * from users where bakeryName='$bakeryName'";
     $result=$conn->query($workerQuery);
     $resultList=[];
     while ($row=$result->fetch_assoc()){
