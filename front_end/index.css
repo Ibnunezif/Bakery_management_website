@@ -546,7 +546,7 @@ select{
     top: 50%; 
     left: 50%; 
     transform: translate(-50%, -50%); 
-    background-color: pink; 
+    background-color: #ccc; 
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
     border-radius: 10px; 
     padding:20px;
@@ -570,19 +570,19 @@ p.error-message{
  }
 #message-display>button{
     padding:12px;
-    background:pink;
+    background: linear-gradient(to left,#0C7060,#427618);
     margin-bottom:20px;
     border:1px solid red;
     outline:none;
     border-radius:6px;
     font-size:16px;
-    color:#333;
+    color:#F6F4F2;
     cursor: pointer;
     font-size: 20px;
 }
 #message-display>.ok{
-    background: linear-gradient(to left,#0C7060,#427618);
-    color:#F6F4F2;
+    background: pink;
+    color:#333;
 }
 #message-display>button:hover{
     background:linear-gradient(to left,#074137,#233f0c);
@@ -591,8 +591,44 @@ p.error-message{
 #message-display>p{
     margin-bottom: 50px;
 }
+.success-messages {
+    position: fixed;
+    top: -100px; 
+    left: 50%;
+    transform: translateX(-50%);
+    display:flex;
+    justify-content: space-between;
+    width: 90vw;
+    z-index: 25;
+    color: green;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid green;
+    background-color: #e6ffe6;
+    border-radius: 6px;
+    animation: slideIn 0.5s forwards; 
+}
 
+.success-messages>button{
+    background-color: transparent;
+    border:none;
+    outline:none;
+    font-size: 35px;
+    color:green;
+    cursor: pointer;
+}
 
+@keyframes slideIn {
+    from {
+        top: -100px;
+        opacity: 0;
+    }
+    to {
+        top: 70px; /* Final position */
+        opacity: 1;
+    }
+}
  @media (min-width:450px){
  .cover-for-large{
     width: 100%;

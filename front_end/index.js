@@ -125,23 +125,28 @@ function confirmAction() {
     form.action = './backend/deleteWorkers.php';
      
 
-    // Create an input element for the ID
+    
     const input = document.createElement('input');
     input.type = 'hidden';
-    input.name = 'id'; // Name of the input
-    input.value = itemId; // Use the stored ID
+    input.name = 'id'; 
+    input.value = itemId; 
     console.log(itemId);
-
-    // Append the input to the form
     form.appendChild(input);
-
-    // Append the form to the body
     document.body.appendChild(form);
 
-    // Submit the form
+    
     form.submit();
 }
 
 function closeDialog() {
     document.getElementById('message-display-conatiner').style.display = 'none';
 }
+
+
+function closeSuccessMessage() {
+        const successMessage = document.querySelector('.success-messages');
+        if (successMessage) {
+            successMessage.style.display = 'none'; 
+        }
+    }
+

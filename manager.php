@@ -4,6 +4,29 @@ $workersList=$_SESSION['workerList'];
 if (!isset($_SESSION['email']) || $_SESSION['role']!='manager'){
     header("Location:./index.php");
 }
+$errors=[
+    'login'=>$_SESSION['login_error']??'',
+    'register'=>$_SESSION['register_error']??''
+];
+
+$success=[
+    'add-message'=>$_SESSION['product-success-message']??'',
+    'sold-message'=>$_SESSION['sold-success-message']??'',
+    'worker-message'=>$_SESSION['worker-success-message']??'',
+    'login-message'=>$_SESSION['login-success-message']??'',
+];
+
+function showSuccessMessage($message){
+    return !empty($message)? "<div class='success-messages'><p>$message</p><button id='close-success-message' onclick='closeSuccessMessage()'><span class='material-icons'>close</span></button></div>":"";
+}
+
+
+unset($_SESSION['product-success-message']);
+unset($_SESSION['sold-success-message']);
+unset($_SESSION['worker-success-message']);
+unset($_SESSION['login-success-message']);
+
+
 $rollNumber=1;
 
 echo "<script>const chartData = " . json_encode($_SESSION['chart-data']) . ";</script>";
@@ -45,6 +68,13 @@ echo "<script>const monthlyRevenue = " . json_encode($_SESSION['monthlyRevenue']
     </div>
         <button id="logout" onclick="window.location.href='./backend/logout.php'"><span class="material-icons">logout</span> Logout</button>
     </header>
+   
+    <!-- <p> here is success message</p><button id="close-success-message" onclick="closeSuccessMessage()"><span class="material-icons">close</span></button> -->
+    <?= showSuccessMessage($success['add-message']); ?>
+    <?= showSuccessMessage($success['sold-message']); ?>
+    <?= showSuccessMessage($success['worker-message']); ?>
+    <?= showSuccessMessage($success['login-message']); ?>
+     
     <div id="hidder" class="" onclick="sideBarToggle(); deactivateProfileCard();"></div>
     <div id="cover-for-large" onclick="deactivateProfileCardForLargeScreen();"></div>
     <div id="message-display-conatiner" onclick='closeDialog()'><div id="message-display"><p>This action delete the worker from the list!</p><button onclick="closeDialog()">cancel</button><button class="ok" onclick="confirmAction()">ok</button></div></div>
@@ -66,12 +96,18 @@ echo "<script>const monthlyRevenue = " . json_encode($_SESSION['monthlyRevenue']
                         <span class="material-icons">lunch_dining</span>
                     
                         <h2>Add Product</h2>
+                        <ul>
+                        <li>total product <?=array_sum(array_column($workersList, 'totalProduct'))?></li>
+                        </ul>
                         <button onclick="showMain('product')">Go to Add Sold Items</button>
                     </div>
                     <!-- Add Sold Section -->
                     <div class="dashboard-card">
                         <span class="material-icons">shopping_basket</span>
                         <h2>Add Sold</h2>
+                        <ul>
+                            <li>total sold <?=array_sum(array_column($workersList, 'totalSold'))?></li>
+                        </ul>
                         <button onclick="showMain('solled')">Go to Add Sold Items</button>
                     </div>
                     <!-- workers section -->
@@ -80,7 +116,7 @@ echo "<script>const monthlyRevenue = " . json_encode($_SESSION['monthlyRevenue']
                         <h2>workers</h2>
                         <ul>
                             <li>total workers <?=count($workersList)?></li>
-                            <li>total product <?=array_sum(array_column($workersList, 'totalProduct'))?></li>
+                            
                         </ul>
                         <button onclick="showMain('manage-workers')">Go to Add Sold Items</button>
                     </div>

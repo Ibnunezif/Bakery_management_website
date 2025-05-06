@@ -12,8 +12,4 @@ if ($_SESSION['role']==='worker'){
     header("Location:./worker.php");
     exit();
 }
-if ($_SESSION['role']==='owner'){
-    header("Location:./owner.php");
-    exit();
-}
 ?>

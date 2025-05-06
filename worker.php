@@ -9,6 +9,21 @@ $errors=[
     'sold-success'=>$_SESSION['sold_success']??'',
 ];
 
+$success=[
+    'add-message'=>$_SESSION['product-success-message']??'',
+    'sold-message'=>$_SESSION['sold-success-message']??'',
+    'login-message'=>$_SESSION['login-success-message']??'',
+];
+
+function showSuccessMessage($message){
+    return !empty($message)? "<div class='success-messages'><p>$message</p><button id='close-success-message' onclick='closeSuccessMessage()'><span class='material-icons'>close</span></button></div>":"";
+}
+
+
+unset($_SESSION['product-success-message']);
+unset($_SESSION['sold-success-message']);
+unset($_SESSION['login-success-message']);
+
 function showError($error){
     return !empty($error)?"<p class='error-message'>$error</p>":"";
 }
@@ -53,6 +68,9 @@ function showSucess($sucess){
     </header>
     <div id="hidder" class="" onclick="sideBarToggle(); deactivateProfileCard();"></div>
     <div id="cover-for-large" onclick="deactivateProfileCardForLargeScreen();"></div>
+    <?= showSuccessMessage($success['add-message']); ?>
+    <?= showSuccessMessage($success['sold-message']); ?>
+    <?= showSuccessMessage($success['login-message']); ?>
     <section id="content-section">
         <aside class="">
             <button class="side-bar-card active-effect" id="dashboard-button" onclick="showMain('dashboard')" draggable="true"><span class="material-icons">dashboard</span> Dashboard</button>

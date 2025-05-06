@@ -58,7 +58,7 @@ if (password_verify($confirmPassword,$password)){
                 }
             
                 $_SESSION["workerList"] = $resultList ?? [];
-            
+                $_SESSION['worker-success-message'] = "You have registered $firstName $lastName successfully!";
             
             header("Location:../index.php");
             exit();

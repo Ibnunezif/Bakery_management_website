@@ -32,4 +32,34 @@ return $monthlyRevenue;
 
 }
 
+
+function soldProductReport($bakeryName,$conn){
+    $query = "
+    SELECT 
+        product.productType AS productType,
+        COALESCE(SUM(product.quantity), 0) AS totalProduced,
+        COALESCE(SUM(sales.soldQuantity), 0) AS totalSold
+    FROM 
+        product
+    LEFT JOIN 
+        sales ON product.productType = sales.productName
+    WHERE 
+        product.userId IN (SELECT userId FROM users WHERE bakeryName = ?)
+    GROUP BY 
+        product.productType
+";
+
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $bakeryName);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$data = [];
+while ($row = $result->fetch_assoc()) {
+    $data[] = $row;
+}
+
+return $data;
+}
+
 ?>
