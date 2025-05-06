@@ -55,25 +55,44 @@ if ($db_row['Role'] == 'manager') {
     // SQL query to fetch worker details along with total products and sales
     $workerQuery = "
         SELECT 
-            users.userId,
-            users.firstName,
-            users.lastName,
-            users.email,
-            users.Salary,
-            users.regDate,
-            COALESCE(SUM(product.quantity), 0) AS totalProduct,
-            COALESCE(SUM(sales.soldQuantity), 0) AS totalSold
+    users.userId,
+    users.firstName,
+    users.lastName,
+    users.email,
+    users.Salary,
+    users.regDate,
+    COALESCE(productData.totalProduct, 0) AS totalProduct,
+    COALESCE(salesData.totalSold, 0) AS totalSold
+FROM 
+    users
+LEFT JOIN 
+    (
+        SELECT 
+            userId, 
+            SUM(quantity) AS totalProduct
         FROM 
-            users
-        LEFT JOIN 
-            product ON users.userId = product.userId
-        LEFT JOIN 
-            sales ON users.userId = sales.userId
-        WHERE 
-            users.bakeryName = ? AND users.Role = 'worker'
+            product
         GROUP BY 
-            users.userId, users.firstName, users.lastName, users.email, users.Salary, users.regDate
-    ";
+            userId
+    ) AS productData
+ON 
+    users.userId = productData.userId
+LEFT JOIN 
+    (
+        SELECT 
+            userId, 
+            SUM(soldQuantity) AS totalSold
+        FROM 
+            sales
+        GROUP BY 
+            userId
+    ) AS salesData
+ON 
+    users.userId = salesData.userId
+WHERE 
+    users.bakeryName = ?
+GROUP BY 
+    users.userId, users.firstName, users.lastName, users.email, users.Salary, users.regDate";
 
     $stmt = $conn->prepare($workerQuery);
     $stmt->bind_param("s", $bakeryName);

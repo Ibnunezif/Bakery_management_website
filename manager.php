@@ -197,8 +197,13 @@ echo "<script>const monthlyRevenue = " . json_encode($_SESSION['monthlyRevenue']
                             <td><?= $worker["totalSold"] ?? 0 ?></td>
                             <td><?= substr($worker["regDate"],0,10) ?></td>
                             <td>
-                                <button onclick="showDialog(<?= $worker['userId']?>)">delete</button>
-                                <button onclick="window.location.href='./front_end/editWorkersData.php?workerId=<?=$worker['userId']?>'">edit</button>
+                                <?php
+                                if ($worker['userId'] != $_SESSION['userId']) { ?>
+                                    <button onclick="showDialog(<?= $worker['userId']?>)">delete</button>
+                                    <button onclick="window.location.href='./front_end/editWorkersData.php?workerId=<?=$worker['userId']?>'">edit</button>
+                               <?php } else{?>
+                                    you
+                                <?php }?>
                             </td>
                         </tr>
                         <?php $rollNumber += 1; ?>

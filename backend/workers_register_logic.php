@@ -42,7 +42,7 @@ if (password_verify($confirmPassword,$password)){
                     LEFT JOIN 
                         sales ON users.userId = sales.userId
                     WHERE 
-                        users.bakeryName = ? AND users.Role = 'worker'
+                        users.bakeryName = ?
                     GROUP BY 
                         users.userId, users.firstName, users.lastName, users.email, users.Salary, users.regDate
                 ";
@@ -58,6 +58,7 @@ if (password_verify($confirmPassword,$password)){
                 }
             
                 $_SESSION["workerList"] = $resultList ?? [];
+                
                 $_SESSION['worker-success-message'] = "You have registered $firstName $lastName successfully!";
             
             header("Location:../index.php");
