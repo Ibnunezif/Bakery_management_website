@@ -3,6 +3,19 @@ session_start();
 if (!isset($_SESSION['email']) || $_SESSION['role']!='worker'){
     header("Location:./index.php");
 }
+
+$errors=[
+    'sold'=>$_SESSION['sold_error']??'',
+    'sold-success'=>$_SESSION['sold_success']??'',
+];
+
+function showError($error){
+    return !empty($error)?"<p class='error-message'>$error</p>":"";
+}
+function showSucess($sucess){
+    return !empty($sucess)?"<p class='success-message'>$sucess</p>":"";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -27,10 +40,11 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='worker'){
         <button id="profile" class="profile" onclick="activateProfileCard()"><?= $_SESSION["bakery-name"][0] ?></button>
         <p id='bakery-name'><?= $_SESSION["bakery-name"] ?> Bakery</p>
         <form id="profile-form" action="" method="">
-            <input type="text" name='bakery-name' value="bakery name: <?=$_SESSION["bakery-name"] ?> Bakery" readonly/>
-            <input type="text" name="user-name" value="name: <?= $_SESSION['fist-name']?> <?=$_SESSION['last-name']?>" readonly/>
-            <input type="text" name="user-email" value="Email: <?= $_SESSION["email"]?>" readonly/> 
-            <p name="registration-date" value="Reg-date:<?= $_SESSION["registrationDate"]?>">Reg-date: <?= substr($_SESSION["registrationDate"],0,10)?></p>
+            <input type="text" name="user-first-name" value="<?= $_SESSION['fist-name']?> " readonly/>
+            <input type="text" name="user-last-name" value=" <?=$_SESSION['last-name']?>" readonly/>
+            <input type="text" name="user-email" value="<?= $_SESSION["email"]?>" readonly/> 
+            <input type="text" name="user-password" placeholder="password" readonly/> 
+            <p name="registration-date" value="<?= $_SESSION["registrationDate"]?>"><?= substr($_SESSION["registrationDate"],0,10)?></p>
             <button type="button" id="toggle-edit" onclick="toggleEdit()">Edit</button>
             <button type="submit" id="submit-edit" name="submit-edit" style="display:none" >save</button>
         </form>
@@ -67,8 +81,8 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='worker'){
             <span class="material-icons">shopping_basket</span>
             <h2>Add Sold Items</h2>
             <ul>
-                <li>you have sold <?=$_SESSION["soldQuantity"]?> products</li>
-                <li>you have genarated <?=$_SESSION["soldPrice"]?> birr income</li>
+                <li>total sold <?=$_SESSION["soldQuantity"]?></li>
+                <li>total income<?= $_SESSION["soldPrice"]?> birr</li>
             </ul>
             
             <button onclick="showMain('solled')">Go to Add Sold Items</button>
@@ -96,7 +110,10 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='worker'){
             </div>
             <div id="solled" class="main-card">
                 <h1> Add Sold Items</h1>
+                
                 <form class='main-card-forms' method='post' action='./backend/add_product_sold.php'>
+                   <?=showError($errors['sold'])?>
+                   <?=showSucess($errors['sold-success'])?>
                     <input type="text" id="sold-quantity" name="sold-quantity" placeholder="sold quantity" required>
                     <input type="text" id="sale-price" name="sale-price" placeholder="unit sale price" required>
                     <select name="outline" id="outline" required>

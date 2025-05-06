@@ -214,12 +214,12 @@ button#logout>span{
   justify-content: center;
   align-items: center;
   width:100%;
+  
 }
 .profile-form input{
   width:90%;
   padding-left:10px;
-  height: 30px;
-  margin:5px 0;
+  margin:2px 0;
   border-radius:6px;
   border:none;
   outline:none;
@@ -242,14 +242,14 @@ cursor:default;
 .profile-form button{
     width:94%;
     padding-left:10px;
-    height: 40px;
-    margin:5px 0;
+    height: 30px;
+    margin:2px 0;
     border-radius:6px;
     border:none;
     outline:none;
     box-shadow:0px 0px 2px #F6F4F2;
     font-size:1.2em;
-    margin-top:20px;
+    margin-top:10px;
     color:#F6F4F2;
     cursor: pointer;
     background:linear-gradient(to left,#0C7060,#427618); ;
@@ -257,8 +257,8 @@ cursor:default;
 }
 
 .active-prof{
-    width:100px;
-    height: 100px;
+    width:80px;
+    height: 80px;
     background-color:transparent;
     border: none;
     outline: none;
@@ -280,7 +280,7 @@ cursor:default;
     justify-content: center;
     transition:0.3s;
     padding:5px;
-    height: 85vh;
+    height: fit-content;
     max-width:400px;
     flex-direction: column;
     background: linear-gradient(to left,#233f0c,#074137);
@@ -368,12 +368,11 @@ select{
     text-align: center;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    max-height: 700px;
+    max-height: fit-content;
 }
 
 .dashboard-card:hover {
@@ -384,19 +383,19 @@ select{
 .dashboard-card span.material-icons {
     font-size: 48px;
     color: #0c7060;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .dashboard-card h2 {
     font-size: 1.5em;
     color: #0C7060;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .dashboard-card p {
     font-size: 1em;
     color: #666;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 .dashboard-card li{
     color:#0C7060;
@@ -560,6 +559,15 @@ select{
     transition: opacity 0.5s ease;
     border: 2px solid red; 
 }
+p.error-message{
+    padding:12px;
+    background:#f8d7da;
+    border-radius:6px; 
+    font-size: 16px;
+    color:#a42834;
+    text-align: center;
+    margin-bottom: 20px;
+ }
 #message-display>button{
     padding:12px;
     background:pink;

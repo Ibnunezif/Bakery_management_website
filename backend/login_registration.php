@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "connection.php";
+require("../backend/report_backend.php");
 
 if (isset($_POST['register'])){
     $firstName=$_POST["first-name"];
@@ -47,23 +48,79 @@ if (isset($_POST["login"])){
 
 
             //if role is manager we are going to fetch all worker data from the database
-            if ($db_row['Role']=='manager'){
-                
-                    $bekaryName=$_SESSION["bakery-name"];
-                    $workerQuery="SELECT * from users where bakeryName='$bekaryName' and Role='worker'";
-                    
-        
-                    $result=$conn->query($workerQuery);
-                    $resultList=[];
-                    while ($row=$result->fetch_assoc()){
-                        $resultList[]=$row; 
-                    }
-        
-                    $_SESSION["workerList"]=$resultList ?? [];
-                    
-            }
+           
+if ($db_row['Role'] == 'manager') {
+    $bakeryName = $_SESSION["bakery-name"];
+
+    // SQL query to fetch worker details along with total products and sales
+    $workerQuery = "
+        SELECT 
+            users.userId,
+            users.firstName,
+            users.lastName,
+            users.email,
+            users.Salary,
+            users.regDate,
+            COALESCE(SUM(product.quantity), 0) AS totalProduct,
+            COALESCE(SUM(sales.soldQuantity), 0) AS totalSold
+        FROM 
+            users
+        LEFT JOIN 
+            product ON users.userId = product.userId
+        LEFT JOIN 
+            sales ON users.userId = sales.userId
+        WHERE 
+            users.bakeryName = ? AND users.Role = 'worker'
+        GROUP BY 
+            users.userId, users.firstName, users.lastName, users.email, users.Salary, users.regDate
+    ";
+
+    $stmt = $conn->prepare($workerQuery);
+    $stmt->bind_param("s", $bakeryName);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $resultList = [];
+    while ($row = $result->fetch_assoc()) {
+        $resultList[] = $row;
+    }
+
+    $_SESSION["workerList"] = $resultList ?? [];
+
+ 
+    $query = "
+    SELECT 
+        product.productType AS productType,
+        COALESCE(SUM(product.quantity), 0) AS totalProduced,
+        COALESCE(SUM(sales.soldQuantity), 0) AS totalSold
+    FROM 
+        product
+    LEFT JOIN 
+        sales ON product.productType = sales.productName
+    WHERE 
+        product.userId IN (SELECT userId FROM users WHERE bakeryName = ?)
+    GROUP BY 
+        product.productType
+";
+
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $bakeryName);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$data = [];
+while ($row = $result->fetch_assoc()) {
+    $data[] = $row;
+}
+
+$_SESSION["chart-data"]=$data;
+
+$monthlyRevenue = monthlyRevenueReport($bakeryName,$conn);
+
+$_SESSION["monthlyRevenue"] = $monthlyRevenue;
 
 
+}
 
             //if role is worker we are going to fetch the product and sales data from the database
             if ($db_row['Role']=='worker'){

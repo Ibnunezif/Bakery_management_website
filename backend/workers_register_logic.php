@@ -22,14 +22,44 @@ if (password_verify($confirmPassword,$password)){
             $conn->query("INSERT INTO users (firstName,lastName,bakeryName,email,password,salary,role) values ('$firstName','$lastName','$bakeryName','$userEmail','$password','$salary','$role')");
             
 
-            $workerQuery="SELECT * from users where bakeryName='$bakeryName' and Role='worker'";
-            $result=$conn->query($workerQuery);
-            $resultList=[];
-            while ($row=$result->fetch_assoc()){
-                $resultList[]=$row; 
-            }
-        
-            $_SESSION["workerList"]=$resultList ?? [];
+                $bakeryName = $_SESSION["bakery-name"];
+            
+                // SQL query to fetch worker details along with total products and sales
+                $workerQuery = "
+                    SELECT 
+                        users.userId,
+                        users.firstName,
+                        users.lastName,
+                        users.email,
+                        users.Salary,
+                        users.regDate,
+                        COALESCE(SUM(product.quantity), 0) AS totalProduct,
+                        COALESCE(SUM(sales.soldQuantity), 0) AS totalSold
+                    FROM 
+                        users
+                    LEFT JOIN 
+                        product ON users.userId = product.userId
+                    LEFT JOIN 
+                        sales ON users.userId = sales.userId
+                    WHERE 
+                        users.bakeryName = ? AND users.Role = 'worker'
+                    GROUP BY 
+                        users.userId, users.firstName, users.lastName, users.email, users.Salary, users.regDate
+                ";
+            
+                $stmt = $conn->prepare($workerQuery);
+                $stmt->bind_param("s", $bakeryName);
+                $stmt->execute();
+                $result = $stmt->get_result();
+            
+                $resultList = [];
+                while ($row = $result->fetch_assoc()) {
+                    $resultList[] = $row;
+                }
+            
+                $_SESSION["workerList"] = $resultList ?? [];
+            
+            
             header("Location:../index.php");
             exit();
         }
@@ -74,5 +104,39 @@ try{
         exit();
     }
     
+}
+
+//eddition users profile data 
+if (isset($_POST['profile-edit'])){
+    $userId=$_SESSION['userId'];
+
+    
+    $row=$conn->query("SELECT * from users WHERE userId=$userId");
+    $userData=$row->fetch_assoc();
+
+    $userEmail=$userData['email'];
+    $userPassword=$userData['password'];
+    $userFirstName=$userData['firstName'];
+    $userLastName=$userData['lastName'];
+
+
+    $firstName=!empty($_POST["user-first-name"])?$_POST["user-first-name"]:$userFirstName;
+    $lastName=!empty($_POST["user-last-name"])?$_POST["user-last-name"]:$userLastName; 
+    $userEmail=!empty($_POST["user-email"])?$_POST["user-email"]:$userEmail;
+    $password=!empty($_POST["user-password"])?$_POST["user-password"]:$userPassword;
+    $hashedPassword=password_hash($password,PASSWORD_DEFAULT);
+    $query="UPDATE users SET firstName='$firstName', lastName='$lastName', email='$userEmail',password='$hashedPassword' WHERE userId=$userId";
+    try{
+        $conn->query($query);
+        $_SESSION['fist-name']=$firstName;
+        $_SESSION['last-name']=$lastName;
+        $_SESSION['email']=$userEmail;
+        header("Location:../index.php");
+        exit();
+    }catch (Exception $e){
+        $_SESSION['profile_edit_error']="Can't edit your data!";
+        header("Location:../front_end/editProfile.php");
+        exit();
+    }
 }
 ?>

@@ -5,6 +5,9 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='manager'){
     header("Location:./index.php");
 }
 $rollNumber=1;
+
+echo "<script>const chartData = " . json_encode($_SESSION['chart-data']) . ";</script>";
+echo "<script>const monthlyRevenue = " . json_encode($_SESSION['monthlyRevenue']) . ";</script>";
 ?>
 
 <!DOCTYPE html>
@@ -28,13 +31,16 @@ $rollNumber=1;
     <div id="info-div" class="info-div" onclick="activateProfileCard()">
         <button id="profile" class="profile" onclick="activateProfileCard()"><?= $_SESSION["bakery-name"][0] ?></button>
         <p id='bakery-name'><?= $_SESSION["bakery-name"] ?> Bakery</p>
-        <form id="profile-form" action="" method="">
-            <input type="text" name='bakery-name' value="bakery name: <?=$_SESSION["bakery-name"] ?> Bakery" readonly/>
-            <input type="text" name="user-name" value="name: <?= $_SESSION['fist-name']?> <?=$_SESSION['last-name']?>" readonly/>
-            <input type="text" name="user-email" value="Email: <?= $_SESSION["email"]?>" readonly/> 
-            <p name="registration-date" value="Reg-date:<?= $_SESSION["registrationDate"]?>">Reg-date: <?= substr($_SESSION["registrationDate"],0,10)?></p>
+        <form id="profile-form" action="./backend/workers_register_logic.php" method="POST">
+        
+            <input type="text" name="user-first-name" value="<?= $_SESSION['fist-name']?> " readonly/>
+            <input type="text" name="user-last-name" value=" <?=$_SESSION['last-name']?>" readonly/>
+            <input type="text" name="user-email" value="<?= $_SESSION["email"]?>" readonly/> 
+            <input type="text" name="user-password" placeholder="password" readonly/> 
+            <p name="registration-date" value="<?= $_SESSION["registrationDate"]?>"><?= substr($_SESSION["registrationDate"],0,10)?></p>
             <button type="button" id="toggle-edit" onclick="toggleEdit()">Edit</button>
-            <button type="submit" id="submit-edit" name="submit-edit" style="display:none" >save</button>
+            <button type="submit" id="submit-edit" name="profile-edit" style="display:none" >save</button>
+        
         </form>
     </div>
         <button id="logout" onclick="window.location.href='./backend/logout.php'"><span class="material-icons">logout</span> Logout</button>
@@ -126,10 +132,6 @@ $rollNumber=1;
                 </form>
 
             </div>
-            <div id="delivered" class="main-card">
-                <h1>Delivered</h1>
-                <p>Check your delivered items here.</p>
-            </div>
             <div id="manage-workers" class="main-card">
                 <h1>mange workers </h1>
             <div class="table-container">
@@ -163,24 +165,23 @@ $rollNumber=1;
                                 <button onclick="window.location.href='./front_end/editWorkersData.php?workerId=<?=$worker['userId']?>'">edit</button>
                             </td>
                         </tr>
-                        <?$rollNumber+=1?>
+                        <?php $rollNumber += 1; ?>
                     <?php endforeach; ?>
                     </tbody>
                 </table>
                 <div id="add-wokers"><button onclick="window.location.href='./front_end/workerRegistrationForm.php'" class="worker-button">+</button> <p id="worker-parag">Add new workers</p> </div>
-            </div>
-                    
-            </div>
-            <div id="purchased" class="main-card">
-                <h1>purchased</h1>
-    
+            </div>      
             </div>
             <div id="report" class="main-card">
                 <h1>Report</h1>
-                <p>Generate reports here.</p>
+                <canvas id="productSalesChart" width="400" height="200"></canvas>
+                <canvas id="monthlyRevenue" width="400" height="200"></canvas>
             </div>
         </main>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./front_end/productSalesChart.js"></script>
+    <script src="./front_end/monthlyRevenue.js"></script>
     <script src="./front_end/index.js" type="text/javascript" defer></script>
 </body>
 
