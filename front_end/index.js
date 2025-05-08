@@ -143,10 +143,10 @@ function closeDialog() {
 }
 
 
-function closeSuccessMessage() {
-        const successMessage = document.querySelector('.success-messages');
-        if (successMessage) {
-            successMessage.style.display = 'none'; 
-        }
+function closeMessage(class_name) {
+    const message = document.querySelector('.' + class_name);
+    if (message) {
+        message.style.display = 'none';
     }
+}
 

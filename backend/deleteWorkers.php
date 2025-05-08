@@ -1,5 +1,6 @@
 <?php
 require_once ("connection.php");
+require ("report_backend.php");
 session_start();
 
     $workerId=$_POST['id'];
@@ -14,13 +15,7 @@ session_start();
     $_SESSION['worker-success-message']="You have deleted $firstName $lastNmae successfully!";
 
     //to show updated report
-    $workerQuery="SELECT * from users where bakeryName='$bakeryName'";
-    $result=$conn->query($workerQuery);
-    $resultList=[];
-    while ($row=$result->fetch_assoc()){
-        $resultList[]=$row; 
-    }
-
+    $resultList=workersData($conn,$bakeryName);
     $_SESSION["workerList"]=$resultList ?? [];
 
     header("Location:../manager.php");

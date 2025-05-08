@@ -23,10 +23,12 @@ if (isset($_POST["add-product"])) {
         $bakeryName = $_SESSION["bakery-name"];
         //to show updated report
         if ($role == 'manager') {
+            $resultList=workersData($conn,$bakeryName);
             $data = soldProductReport($bakeryName, $conn);
             $monthlyRevenue = monthlyRevenueReport($bakeryName, $conn);
             $_SESSION["monthlyRevenue"] = $monthlyRevenue;
             $_SESSION["chart-data"] = $data;
+            $_SESSION["workerList"] = $resultList ?? [];
         }
 
         //to show the updated product data on the dashboard
@@ -67,8 +69,18 @@ if (isset($_POST["add-sold"])) {
     $checkResult = $conn->query($chechSql);
     $checkRow = $checkResult->fetch_assoc();
     $totalProductProduced = $checkRow["totalProductProduced"];
-    if ($totalProductProduced < $sold_quantity) {
-        $_SESSION["sold_error"] = "The sold quantity is greater than the produced quantity.";
+
+    // Get the total quantity of the product that has already been sold
+    $soldSql = "SELECT COALESCE(SUM(sales.soldQuantity), 0) AS totalSold FROM sales JOIN users ON sales.userId = users.userId WHERE users.bakeryName = '$bakeryName' AND sales.productName = '$product_name'";
+    $soldResult = $conn->query($soldSql);
+    $soldRow = $soldResult->fetch_assoc();
+    $totalSold = $soldRow["totalSold"];
+
+    // Calculate the remaining quantity of the product
+    $remainingQuantity = $totalProductProduced - $totalSold;
+
+    if ($remainingQuantity < $sold_quantity) {
+        $_SESSION["sold-error"] = "There are only $remainingQuantity $product_name products available to sell!";
         header("Location: ../$role.php");
         exit();
     } else {
@@ -78,10 +90,12 @@ if (isset($_POST["add-sold"])) {
            
             //to show updated report
             if ($role == 'manager'){
+                $resultList=workersData($conn,$bakeryName);
                 $data = soldProductReport($bakeryName,$conn);
                 $monthlyRevenue = monthlyRevenueReport($bakeryName,$conn);
                 $_SESSION["monthlyRevenue"] = $monthlyRevenue;
                 $_SESSION["chart-data"]=$data;
+                $_SESSION["workerList"] = $resultList ?? [];
             }
             
             // to show the update sold data on the dashboard

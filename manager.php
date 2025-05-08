@@ -4,20 +4,28 @@ $workersList=$_SESSION['workerList'];
 if (!isset($_SESSION['email']) || $_SESSION['role']!='manager'){
     header("Location:./index.php");
 }
-$errors=[
-    'login'=>$_SESSION['login_error']??'',
-    'register'=>$_SESSION['register_error']??''
-];
 
 $success=[
     'add-message'=>$_SESSION['product-success-message']??'',
     'sold-message'=>$_SESSION['sold-success-message']??'',
     'worker-message'=>$_SESSION['worker-success-message']??'',
     'login-message'=>$_SESSION['login-success-message']??'',
+    'worker-edit-success'=>$_SESSION['worker-edit-success']??'',
+    'profile-edit-success'=>$_SESSION['profile-edit-success']??'',
 ];
 
+$errors=[
+    'sold-error'=>$_SESSION['sold-error']??'',
+    'worker-edit-error'=>$_SESSION['worker-edit-error']??'',
+    'profile-edit-error'=>$_SESSION['profile_edit_error']??'',
+];
+
+function showError($message){
+    return !empty($message)? "<div class='top-error-messages'><p>$message</p><button id='close-error-message' onclick='closeMessage(\"top-error-messages\")'><span class='material-icons'>close</span></button></div>":"";
+}
+
 function showSuccessMessage($message){
-    return !empty($message)? "<div class='success-messages'><p>$message</p><button id='close-success-message' onclick='closeSuccessMessage()'><span class='material-icons'>close</span></button></div>":"";
+    return !empty($message)? "<div class='success-messages'><p>$message</p><button id='close-success-message' onclick='closeMessage(\"success-messages\")'><span class='material-icons'>close</span></button></div>":"";
 }
 
 
@@ -25,6 +33,11 @@ unset($_SESSION['product-success-message']);
 unset($_SESSION['sold-success-message']);
 unset($_SESSION['worker-success-message']);
 unset($_SESSION['login-success-message']);
+unset($_SESSION['worker-edit-success']);
+unset($_SESSION['sold-error']);
+unset($_SESSION['worker-edit-error']);
+unset($_SESSION['profile_edit_error']);
+unset($_SESSION['profile-edit-success']);
 
 
 $rollNumber=1;
@@ -57,7 +70,7 @@ echo "<script>const monthlyRevenue = " . json_encode($_SESSION['monthlyRevenue']
         <form id="profile-form" action="./backend/workers_register_logic.php" method="POST">
         
             <input type="text" name="user-first-name" value="<?= $_SESSION['fist-name']?> " readonly/>
-            <input type="text" name="user-last-name" value=" <?=$_SESSION['last-name']?>" readonly/>
+            <input type="text" name="user-last-name" value="<?=$_SESSION['last-name']?>" readonly/>
             <input type="text" name="user-email" value="<?= $_SESSION["email"]?>" readonly/> 
             <input type="text" name="user-password" placeholder="password" readonly/> 
             <p name="registration-date" value="<?= $_SESSION["registrationDate"]?>"><?= substr($_SESSION["registrationDate"],0,10)?></p>
@@ -68,12 +81,16 @@ echo "<script>const monthlyRevenue = " . json_encode($_SESSION['monthlyRevenue']
     </div>
         <button id="logout" onclick="window.location.href='./backend/logout.php'"><span class="material-icons">logout</span> Logout</button>
     </header>
-   
-    <!-- <p> here is success message</p><button id="close-success-message" onclick="closeSuccessMessage()"><span class="material-icons">close</span></button> -->
+
+    <?= showError($errors['sold-error']);?>
+    <?= showError($errors['worker-edit-error']);?>
+    <?=showError($errors['profile-edit-error'])?>
+    <?= showSuccessMessage($success['profile-edit-success']); ?>
     <?= showSuccessMessage($success['add-message']); ?>
     <?= showSuccessMessage($success['sold-message']); ?>
     <?= showSuccessMessage($success['worker-message']); ?>
     <?= showSuccessMessage($success['login-message']); ?>
+    <?= showSuccessMessage($success['worker-edit-success']); ?>
      
     <div id="hidder" class="" onclick="sideBarToggle(); deactivateProfileCard();"></div>
     <div id="cover-for-large" onclick="deactivateProfileCardForLargeScreen();"></div>
@@ -89,7 +106,6 @@ echo "<script>const monthlyRevenue = " . json_encode($_SESSION['monthlyRevenue']
         <main>
             <div id="dashboard" class="main-card show">
                 <h1>Dashboard</h1>
-                <p>Welcome to the dashboard!</p>
                 <div class="dashboard-grid">
                     <!-- Add Product Section -->
                     <div class="dashboard-card">

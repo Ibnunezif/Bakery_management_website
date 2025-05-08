@@ -4,32 +4,32 @@ if (!isset($_SESSION['email']) || $_SESSION['role']!='worker'){
     header("Location:./index.php");
 }
 
-$errors=[
-    'sold'=>$_SESSION['sold_error']??'',
-    'sold-success'=>$_SESSION['sold_success']??'',
-];
-
 $success=[
     'add-message'=>$_SESSION['product-success-message']??'',
     'sold-message'=>$_SESSION['sold-success-message']??'',
     'login-message'=>$_SESSION['login-success-message']??'',
+    'profile-edit-success'=>$_SESSION['profile-edit-success']??'',
+];
+
+$errors=[
+    'sold-error'=>$_SESSION['sold-error']??'',
+    'profile-edit-error'=>$_SESSION['profile_edit_error']??'',
 ];
 
 function showSuccessMessage($message){
-    return !empty($message)? "<div class='success-messages'><p>$message</p><button id='close-success-message' onclick='closeSuccessMessage()'><span class='material-icons'>close</span></button></div>":"";
+    return !empty($message)? "<div class='success-messages'><p>$message</p><button id='close-success-message' onclick='closeMessage(\"success-messages\")'><span class='material-icons'>close</span></button></div>":"";
 }
 
+function showError($message){
+    return !empty($message)? "<div class='top-error-messages'><p>$message</p><button id='close-error-message' onclick='closeMessage(\"top-error-messages\")'><span class='material-icons'>close</span></button></div>":"";
+}
 
 unset($_SESSION['product-success-message']);
 unset($_SESSION['sold-success-message']);
 unset($_SESSION['login-success-message']);
-
-function showError($error){
-    return !empty($error)?"<p class='error-message'>$error</p>":"";
-}
-function showSucess($sucess){
-    return !empty($sucess)?"<p class='success-message'>$sucess</p>":"";
-}
+unset ($_SESSION['sold-error']);
+unset($_SESSION['profile_edit_error']);
+unset($_SESSION['profile-edit-success']);
 
 ?>
 
@@ -54,20 +54,23 @@ function showSucess($sucess){
     <div id="info-div" class="info-div" onclick="activateProfileCard()">
         <button id="profile" class="profile" onclick="activateProfileCard()"><?= $_SESSION["bakery-name"][0] ?></button>
         <p id='bakery-name'><?= $_SESSION["bakery-name"] ?> Bakery</p>
-        <form id="profile-form" action="" method="">
+        <form id="profile-form" action="./backend/workers_register_logic.php" method="POST">
             <input type="text" name="user-first-name" value="<?= $_SESSION['fist-name']?> " readonly/>
-            <input type="text" name="user-last-name" value=" <?=$_SESSION['last-name']?>" readonly/>
+            <input type="text" name="user-last-name" value="<?=$_SESSION['last-name']?>" readonly/>
             <input type="text" name="user-email" value="<?= $_SESSION["email"]?>" readonly/> 
             <input type="text" name="user-password" placeholder="password" readonly/> 
             <p name="registration-date" value="<?= $_SESSION["registrationDate"]?>"><?= substr($_SESSION["registrationDate"],0,10)?></p>
             <button type="button" id="toggle-edit" onclick="toggleEdit()">Edit</button>
-            <button type="submit" id="submit-edit" name="submit-edit" style="display:none" >save</button>
+            <button type="submit" id="submit-edit" name="profile-edit" style="display:none" >save</button>
         </form>
     </div>
         <button id="logout" onclick="window.location.href='./backend/logout.php'"><span class="material-icons">logout</span> Logout</button>
     </header>
     <div id="hidder" class="" onclick="sideBarToggle(); deactivateProfileCard();"></div>
     <div id="cover-for-large" onclick="deactivateProfileCardForLargeScreen();"></div>
+    <?=showError($errors['sold-error'])?>
+    <?=showError($errors['profile-edit-error'])?>
+    <?= showSuccessMessage($success['profile-edit-success']); ?>
     <?= showSuccessMessage($success['add-message']); ?>
     <?= showSuccessMessage($success['sold-message']); ?>
     <?= showSuccessMessage($success['login-message']); ?>
@@ -130,8 +133,6 @@ function showSucess($sucess){
                 <h1> Add Sold Items</h1>
                 
                 <form class='main-card-forms' method='post' action='./backend/add_product_sold.php'>
-                   <?=showError($errors['sold'])?>
-                   <?=showSucess($errors['sold-success'])?>
                     <input type="text" id="sold-quantity" name="sold-quantity" placeholder="sold quantity" required>
                     <input type="text" id="sale-price" name="sale-price" placeholder="unit sale price" required>
                     <select name="outline" id="outline" required>
