@@ -55,11 +55,11 @@ unset($_SESSION['profile-edit-success']);
         <button id="profile" class="profile" onclick="activateProfileCard()"><?= $_SESSION["bakery-name"][0] ?></button>
         <p id='bakery-name'><?= $_SESSION["bakery-name"] ?> Bakery</p>
         <form id="profile-form" action="./backend/workers_register_logic.php" method="POST">
-            <input type="text" name="user-first-name" value="<?= $_SESSION['fist-name']?> " readonly/>
+            <input type="text" name="user-first-name" value="<?=$_SESSION['fist-name']?> " readonly/>
             <input type="text" name="user-last-name" value="<?=$_SESSION['last-name']?>" readonly/>
-            <input type="text" name="user-email" value="<?= $_SESSION["email"]?>" readonly/> 
+            <input type="text" name="user-email" value="<?=$_SESSION["email"]?>" readonly/> 
             <input type="text" name="user-password" placeholder="password" readonly/> 
-            <p name="registration-date" value="<?= $_SESSION["registrationDate"]?>"><?= substr($_SESSION["registrationDate"],0,10)?></p>
+            <p name="registration-date" value="<?=$_SESSION["registrationDate"]?>"><?=substr($_SESSION["registrationDate"],0,10)?></p>
             <button type="button" id="toggle-edit" onclick="toggleEdit()">Edit</button>
             <button type="submit" id="submit-edit" name="profile-edit" style="display:none" >save</button>
         </form>
